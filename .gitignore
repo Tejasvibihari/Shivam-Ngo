@@ -1,0 +1,17 @@
+```powershell
+@"
+node_modules/
+.next/
+out/
+dist/
+build/
+coverage/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+.vercel/
+"@ | Set-Content -Encoding utf8 .gitignore
+```
