@@ -8,6 +8,7 @@ import {
   useMotionValueEvent,
 } from "motion/react";
 
+import Image, { type StaticImageData } from "next/image";
 import React, { useRef, useState } from "react";
 
 
@@ -70,8 +71,11 @@ export const Navbar = ({ children, className }: NavbarProps) => {
   return (
     <motion.div
       ref={ref}
-      // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
-      className={cn("sticky inset-x-0 top-20 z-40 w-full", className)}
+      // Fixed + click-through wrapper: floats over the page (e.g. the hero) and takes no layout space
+      className={cn(
+        "pointer-events-none fixed inset-x-0 top-4 z-50 w-full",
+        className,
+      )}
     >
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
@@ -110,7 +114,7 @@ export const NavBody = ({
         minWidth,
       }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex",
+        "pointer-events-auto relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex",
         visible && "border border-border bg-background/80",
         className,
       )}
@@ -172,7 +176,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         damping: 50,
       }}
       className={cn(
-        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
+        "pointer-events-auto relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
         visible && "border border-border bg-background/80",
         className,
       )}
@@ -244,7 +248,7 @@ export const NavbarLogo = ({
   subtitle = "Evem Sarwangin Vikash Kendra",
 }: {
   href?: string;
-  logoSrc?: string;
+  logoSrc?: string | StaticImageData;
   title?: string;
   subtitle?: string;
 }) => {
@@ -253,7 +257,14 @@ export const NavbarLogo = ({
       href={href}
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1"
     >
-      {/* <img src={logoSrc} alt={`${title} logo`} width={36} height={36} /> */}
+      <Image
+        src={logoSrc}
+        alt={`${title} logo`}
+        width={36}
+        height={36}
+        priority
+        className="h-9 w-9 object-contain"
+      />
       <span className="flex flex-col leading-tight">
         <span className="text-sm font-bold text-brand-dark">{title}</span>
         <span className="text-[10px] font-medium text-primary">{subtitle}</span>

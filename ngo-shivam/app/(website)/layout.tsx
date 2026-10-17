@@ -6,7 +6,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className="relative flex min-h-screen w-full flex-col">
             <NavbarDemo />
-            <main className="flex-1 pt-24">{children}</main>
+            {/* no top padding: the navbar is fixed and floats over the hero */}
+            <main className="flex-1">{children}</main>
             <Footer />
         </div>
     )
