@@ -243,8 +243,8 @@ export const MobileNavToggle = ({
 
 export const NavbarLogo = ({
   href = "#home",
-  logoSrc = "/logo.png",
-  title = "Shivam Jan Swasthya",
+  logoSrc = "/logo/Shivam Ngo Icon.png",
+  title = "Shivam Jan Swasthya ",
   subtitle = "Evem Sarwangin Vikash Kendra",
 }: {
   href?: string;
