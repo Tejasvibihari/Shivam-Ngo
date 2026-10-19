@@ -6,7 +6,7 @@ const ORG = {
     fullName: "Shivam Jan Swasthya Evem Sarwangin Vikash Kendra",
     title: "Shivam Jan Swasthya",
     subtitle: "Evem Sarwangin Vikash Kendra",
-    logo: "/logo.png",
+    logo: "/logo/Shivam Ngo Icon.png",
 };
 
 /** Big faded text at the bottom. Its size auto-fits the width. */
