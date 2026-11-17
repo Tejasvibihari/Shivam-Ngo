@@ -9,6 +9,7 @@ import {
 } from "motion/react";
 
 import Image, { type StaticImageData } from "next/image";
+import Link from "next/link";
 import React, { useRef, useState } from "react";
 
 
@@ -136,7 +137,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
       )}
     >
       {items.map((item, idx) => (
-        <a
+        <Link
           onMouseEnter={() => setHovered(idx)}
           onClick={onItemClick}
           className="relative px-4 py-2 text-foreground/70 transition-colors duration-200 hover:text-primary"
@@ -150,7 +151,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
             />
           )}
           <span className="relative z-20">{item.name}</span>
-        </a>
+        </Link>
       ))}
     </motion.div>
   );
@@ -253,7 +254,7 @@ export const NavbarLogo = ({
   subtitle?: string;
 }) => {
   return (
-    <a
+    <Link
       href={href}
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1"
     >
@@ -269,13 +270,13 @@ export const NavbarLogo = ({
         <span className="text-sm font-bold text-brand-dark">{title}</span>
         <span className="text-[10px] font-medium text-primary">{subtitle}</span>
       </span>
-    </a>
+    </Link>
   );
 };
 
 export const NavbarButton = ({
   href,
-  as: Tag = "a",
+  as,
   children,
   className,
   variant = "primary",
@@ -290,6 +291,8 @@ export const NavbarButton = ({
     | React.ComponentPropsWithoutRef<"a">
     | React.ComponentPropsWithoutRef<"button">
   )) => {
+  // internal links use next/link (client-side navigation, no page refresh)
+  const Tag: React.ElementType = as ?? (href ? Link : "a");
   const baseStyles =
     "px-4 py-2 rounded-md button text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
 

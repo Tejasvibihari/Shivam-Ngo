@@ -26,11 +26,11 @@ const COLUMNS: { title: string; links: FooterLink[] }[] = [
     {
         title: "Pages",
         links: [
-            { label: "Home", href: "#home" },
-            { label: "Gallery", href: "#gallery" },
-            { label: "About", href: "#about" },
-            { label: "Activities", href: "#activities" },
-            { label: "Contact", href: "#contact" },
+            { label: "Home", href: "/" },
+            { label: "Gallery", href: "/gallery" },
+            { label: "About", href: "/#about" },
+            { label: "Activities", href: "/#activities" },
+            { label: "Contact", href: "/#contact" },
         ],
     },
     {
@@ -53,8 +53,8 @@ const COLUMNS: { title: string; links: FooterLink[] }[] = [
     {
         title: "Get Involved",
         links: [
-            { label: "Donate", href: "#donate" },
-            { label: "Be a Volunteer", href: "#volunteer" },
+            { label: "Donate", href: "/#donate" },
+            { label: "Be a Volunteer", href: "/#volunteer" },
             { label: "Login", href: "/login" },
         ],
     },
@@ -78,7 +78,7 @@ export default function Footer() {
                 <div className="flex flex-col gap-12 lg:flex-row lg:justify-between">
                     {/* Brand + copyright */}
                     <div className="max-w-sm">
-                        <Link href="#home" className="flex items-center gap-3">
+                        <Link href="/" className="flex items-center gap-3">
                             <Image
                                 src={ORG.logo}
                                 alt={`${ORG.title} logo`}

@@ -10,33 +10,34 @@ import {
     MobileNavToggle,
     MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function NavbarDemo() {
     const navItems = [
         {
             name: "Home",
-            link: "#home",
+            link: "/",
         },
         {
             name: "Gallery",
-            link: "#gallery",
+            link: "/gallery",
         },
         {
             name: "About",
-            link: "#about",
+            link: "/#about",
         },
         {
             name: "Activities",
-            link: "#activities",
+            link: "/#activities",
         },
         {
             name: "Contact",
-            link: "#contact",
+            link: "/#contact",
         },
         {
             name: "Be a Volunteer",
-            link: "#volunteer",
+            link: "/#volunteer",
         },
     ];
 
@@ -47,13 +48,13 @@ export default function NavbarDemo() {
             <Navbar className="fixed inset-x-0 top-6 z-40 w-full">
                 {/* Desktop Navigation */}
                 <NavBody shrinkWidth="70%" className="max-w-7xl">
-                    <NavbarLogo />
+                    <NavbarLogo href="/" />
                     <NavItems items={navItems} />
                     <div className="flex items-center gap-4">
                         <NavbarButton variant="secondary" href="#login">
                             Login
                         </NavbarButton>
-                        <NavbarButton variant="cta" href="#donate">
+                        <NavbarButton variant="cta" href="/#donate">
                             Donate
                         </NavbarButton>
                     </div>
@@ -62,7 +63,7 @@ export default function NavbarDemo() {
                 {/* Mobile Navigation */}
                 <MobileNav>
                     <MobileNavHeader>
-                        <NavbarLogo />
+                        <NavbarLogo href="/" />
                         <MobileNavToggle
                             isOpen={isMobileMenuOpen}
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -74,14 +75,14 @@ export default function NavbarDemo() {
                         onClose={() => setIsMobileMenuOpen(false)}
                     >
                         {navItems.map((item, idx) => (
-                            <a
+                            <Link
                                 key={`mobile-link-${idx}`}
                                 href={item.link}
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 className="relative text-foreground/80 transition-colors hover:text-primary"
                             >
                                 <span className="block">{item.name}</span>
-                            </a>
+                            </Link>
                         ))}
                         <div className="flex w-full flex-col gap-4">
                             <NavbarButton
@@ -95,7 +96,7 @@ export default function NavbarDemo() {
                             <NavbarButton
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 variant="cta"
-                                href="#donate"
+                                href="/#donate"
                                 className="w-full"
                             >
                                 Donate
