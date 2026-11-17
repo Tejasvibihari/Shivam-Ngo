@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CONTACT } from "@/lib/org";
 
 /* ============================== CONTENT ============================== */
 const ORG = {
@@ -131,6 +132,51 @@ export default function Footer() {
                                 </ul>
                             </nav>
                         ))}
+                    </div>
+                </div>
+
+                {/* Address & contact */}
+                <div className="mt-12 grid gap-x-12 gap-y-10 border-t border-border pt-10 sm:grid-cols-2 lg:grid-cols-3">
+                    <div>
+                        <h3 className="text-sm font-semibold text-foreground">
+                            Head Office
+                        </h3>
+                        <p className="mt-5 text-sm text-muted-foreground">
+                            {CONTACT.headOffice}
+                        </p>
+                    </div>
+                    <div>
+                        <h3 className="text-sm font-semibold text-foreground">
+                            Registered Office
+                        </h3>
+                        <p className="mt-5 text-sm text-muted-foreground">
+                            {CONTACT.registeredOffice}
+                        </p>
+                    </div>
+                    <div>
+                        <h3 className="text-sm font-semibold text-foreground">
+                            Contact
+                        </h3>
+                        <ul className="mt-5 space-y-4 text-sm">
+                            <li>
+                                <a
+                                    href={`mailto:${CONTACT.email}`}
+                                    className="text-muted-foreground transition-colors hover:text-primary"
+                                >
+                                    {CONTACT.email}
+                                </a>
+                            </li>
+                            {CONTACT.phones.map((phone) => (
+                                <li key={phone.href}>
+                                    <a
+                                        href={phone.href}
+                                        className="text-muted-foreground transition-colors hover:text-primary"
+                                    >
+                                        {phone.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
 

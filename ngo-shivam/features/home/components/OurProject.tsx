@@ -72,7 +72,7 @@ export default function OurProject() {
     return (
         <section
             id="activities"
-            className="relative w-full bg-brand-light px-6 py-24 sm:py-28"
+            className="relative w-full bg-background px-6 py-24 sm:py-28"
         >
             <div className="mx-auto max-w-7xl">
                 {/* Heading */}
@@ -83,7 +83,7 @@ export default function OurProject() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     className="mx-auto max-w-2xl text-center"
                 >
-                    <span className="inline-block rounded-full border border-primary/30 bg-background/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
+                    <span className="inline-block rounded-full border border-primary/30 bg-muted px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
                         {SECTION.eyebrow}
                     </span>
                     <h2 className="mt-5 text-3xl font-bold tracking-tight text-brand-dark sm:text-4xl">
