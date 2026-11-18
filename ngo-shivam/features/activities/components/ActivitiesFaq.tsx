@@ -15,7 +15,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
         a: (
             <>
                 Fill in the volunteer form on our{" "}
-                <Link href="/volunteer" className="font-semibold text-primary hover:underline">
+                <Link href="/#volunteer" className="font-semibold text-primary hover:underline">
                     home page
                 </Link>{" "}
                 and tell us how you would like to help. Our team will get back to you.

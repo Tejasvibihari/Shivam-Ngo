@@ -4,15 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import {
-    IconBuildingCommunity,
-    IconCheck,
+    IconBook2,
+    IconDroplet,
     IconHeartbeat,
-    IconHeartHandshake,
-    IconHomeHeart,
-    IconLifebuoy,
-    IconPlant2,
-    IconSchool,
+    IconSparkles,
+    IconTools,
     IconUsersGroup,
+    IconCheck,
 } from "@tabler/icons-react";
 
 /* ============================== CONTENT ============================== */
@@ -28,115 +26,89 @@ type Area = {
 
 const SECTION = {
     eyebrow: "What We Do",
-    title: "Eight areas of work, one shared goal",
+    title: "Six areas of work, one shared goal",
     intro:
         "Everything we do is built around the everyday needs of families. Pick an area to jump straight to it.",
 };
 
 const AREAS: Area[] = [
     {
-        id: "people-in-need",
-        title: "Support for People in Need",
+        id: "sanitation",
+        title: "Sanitation",
         description:
-            "We work to help those in need, irrespective of race, caste, sex, community or creed.",
+            "Safe sanitation is the base of a healthy home. We promote good hygiene practices and work to make clean, safe facilities available to families.",
         includes: [
-            "Help for people and families in need",
-            "Equal respect for everyone we serve",
-            "Working alongside local people",
+            "Awareness on safe sanitation and hygiene",
+            "Public toilet facilities for the community",
+            "Support for families to adopt healthier habits",
         ],
-        image: { src: "/activities/social-development.jpg", alt: "Community support work" },
-        icon: IconHeartHandshake,
+        image: { src: "/activities/sanitation.jpg", alt: "Sanitation work in the community" },
+        icon: IconDroplet,
     },
     {
-        id: "family-life",
-        title: "Strong Families",
+        id: "cleanliness",
+        title: "Cleanliness",
         description:
-            "A strong family is the foundation of a strong community. We support families so that the tendency towards disintegration is effectively arrested.",
+            "Clean neighbourhoods are healthier neighbourhoods. Our volunteers and community members come together to keep shared spaces clean.",
         includes: [
-            "Family-life education",
-            "Counselling",
-            "Other support systems for families",
+            "Volunteer-led community clean-up drives",
+            "Care for streets and shared spaces",
+            "Awareness on responsible waste collection and disposal",
         ],
-        image: { src: "/activities/family-life.jpg", alt: "Family-life education session" },
-        icon: IconHomeHeart,
+        image: { src: "/activities/cleanliness.jpg", alt: "Community cleanliness drive" },
+        icon: IconSparkles,
     },
     {
-        id: "skills-awareness",
-        title: "Skills & Awareness",
+        id: "education",
+        title: "Education",
         description:
-            "We build people's competence through education, awareness generation and skill training, so they can mobilise and manage resources for self-advancement.",
+            "Learning opens doors. We support education and awareness so that children and adults can build a better future.",
         includes: [
-            "Education and learning support",
-            "Awareness generation in the community",
-            "Skill-training programmes",
+            "Learning support for children and adults",
+            "Awareness sessions in the community",
+            "Encouraging families to value education",
         ],
         image: { src: "/activities/education.jpg", alt: "Children learning at an awareness programme" },
-        icon: IconSchool,
+        icon: IconBook2,
     },
     {
-        id: "infrastructure",
-        title: "Community Infrastructure",
+        id: "vocational-training",
+        title: "Vocational Training",
         description:
-            "In partnership with stakeholders, we help develop the basic facilities that make everyday life safer and better.",
+            "Practical skills lead to a livelihood. Our training programmes help people learn skills they can use to earn and support their families.",
         includes: [
-            "Housing and drinking water",
-            "Electricity and pathways",
-            "Community halls",
+            "Practical skill-training programmes",
+            "Guidance towards earning a livelihood",
+            "Opportunities for women and youth to learn together",
         ],
-        image: { src: "/activities/sanitation.jpg", alt: "Community facilities" },
-        icon: IconBuildingCommunity,
+        image: { src: "/activities/vocational-training.jpg", alt: "Vocational training session" },
+        icon: IconTools,
     },
     {
-        id: "health-sanitation",
-        title: "Health & Sanitation",
+        id: "health-awareness",
+        title: "Health Awareness",
         description:
-            "We focus on health-related matters and promote personal hygiene and environmental sanitation, so that families can understand and act on everyday health matters.",
+            "Informed families make better health choices. We run awareness drives and health camps that make everyday health matters easier to understand and act on.",
         includes: [
-            "Health education",
-            "Behavioural change communication (BCC)",
-            "Immunisation programmes",
+            "Health camps and medical check-ups",
+            "Awareness drives and rallies",
+            "Everyday health guidance for families",
         ],
         image: { src: "/activities/health-awareness.jpg", alt: "Health awareness camp" },
         icon: IconHeartbeat,
     },
     {
-        id: "self-help-groups",
-        title: "Self-Help Groups",
+        id: "social-development",
+        title: "Social Development",
         description:
-            "We establish self-help groups of men and women and engage them in creative activities, so they gain the information, know-how and resources to improve their living conditions.",
+            "Real progress reaches everyone when communities work together. We work alongside people so that no household is left behind.",
         includes: [
-            "Self-help groups for men and women",
-            "Creative, income-building activities",
-            "Information and know-how for members",
+            "Women self-help groups",
+            "Village outreach and community gatherings",
+            "Working alongside local people to lead change",
         ],
-        image: { src: "/activities/vocational-training.jpg", alt: "Self-help group members at a training session" },
+        image: { src: "/activities/social-development.jpg", alt: "Community gathering" },
         icon: IconUsersGroup,
-    },
-    {
-        id: "agriculture",
-        title: "Agriculture & Livelihood",
-        description:
-            "We address emerging issues in the farming sector, such as low productivity, indebtedness and exploitation by traders.",
-        includes: [
-            "Modern, eco-friendly farming practices",
-            "Value addition to farm produce",
-            "Better marketing to maximise incomes",
-        ],
-        image: { src: "/activities/agriculture.jpg", alt: "Farmers working in the field" },
-        icon: IconPlant2,
-    },
-    {
-        id: "disaster-relief",
-        title: "Disaster Relief",
-        description:
-            "When disaster strikes, we step in immediately in the affected areas and carry out relief and rehabilitation work together with the community.",
-        includes: [
-            "Immediate response in disaster-hit areas",
-            "Relief and rehabilitation work",
-            "A participatory approach with local people",
-        ],
-        image: { src: "/activities/disaster-relief.jpg", alt: "Relief work in a disaster-hit area" },
-        icon: IconLifebuoy,
     },
 ];
 /* ===================================================================== */

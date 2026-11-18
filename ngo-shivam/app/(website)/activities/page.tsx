@@ -11,7 +11,7 @@ import AboutCta from "@/features/about/components/AboutCta";
 export const metadata: Metadata = {
     title: "Activities | Shivam Jan Swasthya Evem Sarwangin Vikash Kendra",
     description:
-        "Explore our work in health and sanitation, family life, skills and education, community infrastructure, self-help groups, agriculture and disaster relief, plus our projects, programmes and ways to get involved.",
+        "Explore our work in sanitation, cleanliness, education, vocational training, health awareness and social development, plus our projects, programmes and ways to get involved.",
 };
 
 export default function ActivitiesPage() {
@@ -24,7 +24,7 @@ export default function ActivitiesPage() {
                         Work that reaches <span className="text-primary">every household</span>
                     </>
                 }
-                description="From health camps and skill training to self-help groups and disaster relief, here is what we do on the ground and how you can be part of it."
+                description="From clean-up drives to health camps and skill training, here is what we do on the ground and how you can be part of it."
                 breadcrumbs={[{ label: "Activities" }]}
             />
             <ActivitiesOverview />

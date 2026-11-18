@@ -15,7 +15,7 @@ const SECTION = {
     title: "Take part in our activities",
     intro:
         "You do not need special skills to help. Here are some of the ways you can join us on the ground.",
-    cta: { label: "Become a Volunteer", href: "/volunteer" },
+    cta: { label: "Become a Volunteer", href: "/#volunteer" },
 };
 
 /** Matches the volunteer roles on the home page. */
