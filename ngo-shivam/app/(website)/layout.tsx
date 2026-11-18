@@ -10,7 +10,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <SplashScreen />
             <LeafCursor density={3} speed={1} />
             <NavbarDemo />
-            {/* no top padding: the navbar is fixed and floats over the hero */}
             <main className="flex-1">{children}</main>
             <Footer />
         </div>

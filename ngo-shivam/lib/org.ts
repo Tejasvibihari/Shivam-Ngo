@@ -4,7 +4,7 @@
  */
 export const CONTACT = {
     headOffice:
-        "5C/12, Manna Singh Lane, Viveka Nand Marg, Boring Road, Patna, Bihar",
+        "5C/12, Manna Singh Lane, Vivekanand Marg, Boring Road, Patna, Bihar",
     registeredOffice:
         "A/6, Ajanta Colony, Keshari Nagar, Patna, Bihar - 800024",
     email: "ngoshivam@gmail.com",

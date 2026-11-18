@@ -23,7 +23,7 @@ const SECTION = {
     title: "Cleaner spaces, healthier communities",
     intro:
         "A look at some of the practical, on-the-ground work we do to improve sanitation and everyday living conditions.",
-    cta: { label: "View All Projects", href: "/projects" },
+    cta: { label: "View All Activities", href: "/activities" },
 };
 
 /**

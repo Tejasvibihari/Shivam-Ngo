@@ -2,11 +2,13 @@
 
 import { motion } from "motion/react";
 import {
-    IconBook2,
-    IconSparkles,
-    IconDroplet,
+    IconBuildingCommunity,
     IconHeartbeat,
-    IconTools,
+    IconHeartHandshake,
+    IconHomeHeart,
+    IconLifebuoy,
+    IconPlant2,
+    IconSchool,
     IconUsersGroup,
 } from "@tabler/icons-react";
 
@@ -19,47 +21,59 @@ type Area = {
 
 const SECTION = {
     eyebrow: "What We Do",
-    title: "Six areas, one goal: healthier, self-reliant families",
+    title: "Eight objectives, one goal: self-reliant, healthier communities",
     intro:
-        "Our work is built around the everyday needs of the community. These are the areas we focus on.",
+        "Our work is built around the everyday needs of the community. These are the objectives that guide us.",
 };
 
 const AREAS: Area[] = [
     {
-        title: "Sanitation",
+        title: "Support for People in Need",
         description:
-            "Promoting safe sanitation and hygiene practices so every family has a healthier home.",
-        icon: IconDroplet,
+            "Work to help those in need, irrespective of race, caste, sex, community or creed.",
+        icon: IconHeartHandshake,
     },
     {
-        title: "Cleanliness",
+        title: "Strong Families",
         description:
-            "Community clean-ups and awareness that keep neighbourhoods and shared spaces clean.",
-        icon: IconSparkles,
+            "Strengthening the family through family-life education, counselling and other support systems.",
+        icon: IconHomeHeart,
     },
     {
-        title: "Education",
+        title: "Skills & Awareness",
         description:
-            "Supporting learning and awareness so that children and adults can build a better future.",
-        icon: IconBook2,
+            "Building people's competence through education, awareness generation and skill training so they can manage resources for self-advancement.",
+        icon: IconSchool,
     },
     {
-        title: "Vocational Training",
+        title: "Community Infrastructure",
         description:
-            "Training programmes that help people learn practical skills and earn a livelihood.",
-        icon: IconTools,
+            "Developing housing, drinking water, electricity, pathways and community halls in partnership with stakeholders.",
+        icon: IconBuildingCommunity,
     },
     {
-        title: "Health Awareness",
+        title: "Health & Sanitation",
         description:
-            "Awareness drives that help families understand and act on everyday health matters.",
+            "Promoting personal hygiene and environmental sanitation through health education, behavioural change communication and immunisation.",
         icon: IconHeartbeat,
     },
     {
-        title: "Social Development",
+        title: "Self-Help Groups",
         description:
-            "Working alongside communities so that progress reaches every household.",
+            "Forming self-help groups of men and women, engaged in creative activities that improve their living conditions.",
         icon: IconUsersGroup,
+    },
+    {
+        title: "Agriculture & Livelihood",
+        description:
+            "Addressing low productivity, indebtedness and exploitation by traders, and promoting eco-friendly farming, value addition and better marketing.",
+        icon: IconPlant2,
+    },
+    {
+        title: "Disaster Relief",
+        description:
+            "Stepping in immediately in disaster-hit areas with relief and rehabilitation work, carried out in a participatory manner.",
+        icon: IconLifebuoy,
     },
 ];
 /* ===================================================================== */
@@ -89,7 +103,7 @@ export default function WhatWeDoSection() {
                     </p>
                 </motion.div>
 
-                <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {AREAS.map((area, i) => {
                         const Icon = area.icon;
                         return (
@@ -100,7 +114,7 @@ export default function WhatWeDoSection() {
                                 viewport={{ once: true, amount: 0.25 }}
                                 transition={{
                                     duration: 0.55,
-                                    delay: (i % 3) * 0.08,
+                                    delay: (i % 4) * 0.08,
                                     ease: "easeOut",
                                 }}
                                 className="group rounded-3xl border border-border bg-card p-7 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/10"

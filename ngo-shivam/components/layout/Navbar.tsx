@@ -25,19 +25,19 @@ export default function NavbarDemo() {
         },
         {
             name: "About",
-            link: "/#about",
+            link: "/about",
         },
         {
             name: "Activities",
-            link: "/#activities",
+            link: "/activities",
         },
         {
             name: "Contact",
-            link: "/#contact",
+            link: "/contact",
         },
         {
             name: "Be a Volunteer",
-            link: "/#volunteer",
+            link: "/volunteer",
         },
     ];
 
