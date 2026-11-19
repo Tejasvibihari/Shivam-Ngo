@@ -109,7 +109,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 export default function ProjectsShowcase() {
     return (
-        <section id="projects" className="relative w-full bg-background px-6 py-24 sm:py-28">
+        <section id="projects" className="relative scroll-mt-28 w-full bg-background px-6 py-24 sm:py-28">
             <div className="mx-auto max-w-6xl">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}

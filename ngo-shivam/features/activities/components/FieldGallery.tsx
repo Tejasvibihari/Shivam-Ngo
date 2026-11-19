@@ -50,7 +50,7 @@ export default function FieldGallery() {
     const items = GALLERY_ITEMS.slice(0, COUNT);
 
     return (
-        <section className="relative w-full bg-brand-light px-6 py-24 sm:py-28">
+        <section id="field-gallery" className="relative scroll-mt-28 w-full bg-brand-light px-6 py-24 sm:py-28">
             <div className="mx-auto max-w-6xl">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}

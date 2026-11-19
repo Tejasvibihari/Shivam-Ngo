@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/resizable-navbar";
 import Link from "next/link";
 import { useState } from "react";
+import { IconChevronDown } from "@tabler/icons-react";
 
 export default function NavbarDemo() {
     const navItems = [
@@ -28,12 +29,30 @@ export default function NavbarDemo() {
             link: "/about",
         },
         {
+            name: "News & Events",
+            link: "/news",
+        },
+        {
             name: "Activities",
             link: "/activities",
+            children: [
+                { name: "All Activities", link: "/activities" },
+                { name: "Sanitation", link: "/activities#what-we-do" },
+                { name: "House Keeping", link: "/activities#programmes" },
+                { name: "Delux Toilet Complex", link: "/activities#projects" },
+                { name: "Vocational Training", link: "/activities#field-gallery" },
+                { name: "Education", link: "/activities#get-involved" },
+                { name: "Health", link: "/activities#faqs" },
+                { name: "Social Reform", link: "/activities#faqs" },
+            ],
         },
         {
             name: "Contact",
             link: "/contact",
+        },
+        {
+            name: "Management",
+            link: "/management",
         },
         {
             name: "Be a Volunteer",
@@ -42,6 +61,7 @@ export default function NavbarDemo() {
     ];
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
     return (
         <div className="relative w-full">
@@ -50,14 +70,14 @@ export default function NavbarDemo() {
                 <NavBody shrinkWidth="70%" className="max-w-7xl">
                     <NavbarLogo href="/" />
                     <NavItems items={navItems} />
-                    <div className="flex items-center gap-4">
+                    {/* <div className="flex items-center gap-4">
                         <NavbarButton variant="secondary" href="#login">
                             Login
                         </NavbarButton>
                         <NavbarButton variant="cta" href="/#donate">
                             Donate
                         </NavbarButton>
-                    </div>
+                    </div> */}
                 </NavBody>
 
                 {/* Mobile Navigation */}
@@ -74,18 +94,59 @@ export default function NavbarDemo() {
                         isOpen={isMobileMenuOpen}
                         onClose={() => setIsMobileMenuOpen(false)}
                     >
-                        {navItems.map((item, idx) => (
-                            <Link
-                                key={`mobile-link-${idx}`}
-                                href={item.link}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="relative text-foreground/80 transition-colors hover:text-primary"
-                            >
-                                <span className="block">{item.name}</span>
-                            </Link>
-                        ))}
+                        {navItems.map((item, idx) =>
+                            item.children ? (
+                                <div key={`mobile-group-${idx}`} className="w-full">
+                                    <div className="flex w-full items-center justify-between">
+                                        <Link
+                                            href={item.link}
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className="relative text-foreground/80 transition-colors hover:text-primary"
+                                        >
+                                            <span className="block">{item.name}</span>
+                                        </Link>
+                                        <button
+                                            type="button"
+                                            aria-label={`Toggle ${item.name} menu`}
+                                            aria-expanded={openSubmenu === item.name}
+                                            onClick={() =>
+                                                setOpenSubmenu(openSubmenu === item.name ? null : item.name)
+                                            }
+                                            className="p-1 text-foreground/80"
+                                        >
+                                            <IconChevronDown
+                                                className={`h-4 w-4 transition-transform ${openSubmenu === item.name ? "rotate-180" : ""}`}
+                                            />
+                                        </button>
+                                    </div>
+                                    {openSubmenu === item.name && (
+                                        <div className="mt-3 flex flex-col gap-3 border-l border-border pl-4">
+                                            {item.children.map((child) => (
+                                                <Link
+                                                    key={child.link}
+                                                    href={child.link}
+                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                    className="text-sm text-foreground/70 transition-colors hover:text-primary"
+                                                >
+                                                    {child.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <Link
+                                    key={`mobile-link-${idx}`}
+                                    href={item.link}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="relative text-foreground/80 transition-colors hover:text-primary"
+                                >
+                                    <span className="block">{item.name}</span>
+                                </Link>
+                            ),
+                        )}
                         <div className="flex w-full flex-col gap-4">
-                            <NavbarButton
+                            {/* <NavbarButton
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 variant="primary"
                                 href="#login"
@@ -100,7 +161,7 @@ export default function NavbarDemo() {
                                 className="w-full"
                             >
                                 Donate
-                            </NavbarButton>
+                            </NavbarButton> */}
                         </div>
                     </MobileNavMenu>
                 </MobileNav>

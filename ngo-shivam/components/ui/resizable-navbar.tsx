@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { IconChevronDown, IconMenu2, IconX } from "@tabler/icons-react";
 import {
   motion,
   AnimatePresence,
@@ -30,6 +30,7 @@ interface NavItemsProps {
   items: {
     name: string;
     link: string;
+    children?: { name: string; link: string }[];
   }[];
   className?: string;
   onItemClick?: () => void;
@@ -137,21 +138,62 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
       )}
     >
       {items.map((item, idx) => (
-        <Link
-          onMouseEnter={() => setHovered(idx)}
-          onClick={onItemClick}
-          className="relative px-4 py-2 text-foreground/70 transition-colors duration-200 hover:text-primary"
+        <div
           key={`link-${idx}`}
-          href={item.link}
+          className="relative"
+          onMouseEnter={() => setHovered(idx)}
         >
-          {hovered === idx && (
-            <motion.div
-              layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-accent"
-            />
-          )}
-          <span className="relative z-20">{item.name}</span>
-        </Link>
+          <Link
+            onClick={onItemClick}
+            className="relative flex items-center gap-1 px-4 py-2 text-foreground/70 transition-colors duration-200 hover:text-primary"
+            href={item.link}
+          >
+            {hovered === idx && (
+              <motion.div
+                layoutId="hovered"
+                className="absolute inset-0 h-full w-full rounded-full bg-accent"
+              />
+            )}
+            <span className="relative z-20">{item.name}</span>
+            {item.children && (
+              <IconChevronDown
+                className={cn(
+                  "relative z-20 h-3.5 w-3.5 transition-transform duration-200",
+                  hovered === idx && "rotate-180",
+                )}
+              />
+            )}
+          </Link>
+
+          {/* Dropdown (desktop) */}
+          <AnimatePresence>
+            {item.children && hovered === idx && (
+              <div className="absolute left-0 top-full z-50 w-64 pt-2">
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 0.15 }}
+                  className="overflow-hidden rounded-2xl border border-border bg-background p-2 shadow-lg"
+                >
+                  {item.children.map((child) => (
+                    <Link
+                      key={child.link}
+                      href={child.link}
+                      onClick={() => {
+                        setHovered(null);
+                        onItemClick?.();
+                      }}
+                      className="block rounded-xl px-3 py-2 text-sm text-foreground/80 transition-colors hover:bg-accent hover:text-primary"
+                    >
+                      {child.name}
+                    </Link>
+                  ))}
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
+        </div>
       ))}
     </motion.div>
   );

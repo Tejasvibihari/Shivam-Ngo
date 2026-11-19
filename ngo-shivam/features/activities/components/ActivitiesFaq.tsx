@@ -59,7 +59,7 @@ const FAQS: { q: string; a: React.ReactNode }[] = [
 
 export default function ActivitiesFaq() {
     return (
-        <section className="relative w-full bg-brand-light px-6 py-24 sm:py-28">
+        <section id="faqs" className="relative scroll-mt-28 w-full bg-brand-light px-6 py-24 sm:py-28">
             <div className="mx-auto max-w-3xl">
                 <div className="text-center">
                     <span className="inline-block rounded-full border border-primary/30 bg-background/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary">
