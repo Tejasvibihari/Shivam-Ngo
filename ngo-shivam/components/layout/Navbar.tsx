@@ -65,7 +65,7 @@ export default function NavbarDemo() {
         <div className="relative w-full">
             <Navbar className="fixed inset-x-0 top-6 z-40 w-full">
                 {/* Desktop Navigation */}
-                <NavBody shrinkWidth="70%" className="max-w-7xl">
+                <NavBody shrinkWidth="70%" minWidth="960px" className="max-w-7xl">
                     <NavbarLogo href="/" />
                     <NavItems items={navItems} />
                     {/* <div className="flex items-center gap-4">
