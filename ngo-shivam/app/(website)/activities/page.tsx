@@ -11,7 +11,7 @@ import AboutCta from "@/features/about/components/AboutCta";
 export const metadata: Metadata = {
     title: "Activities | Shivam Jan Swasthya Evem Sarwangin Vikash Kendra",
     description:
-        "Explore our work in sanitation, cleanliness, education, vocational training, health awareness and social development, plus our projects, programmes and ways to get involved.",
+        "Explore our work in sanitation, housekeeping services, household toilets, vocational training, education, health programmes and social reforms in Patna, Bihar, plus our projects and ways to get involved.",
 };
 
 export default function ActivitiesPage() {

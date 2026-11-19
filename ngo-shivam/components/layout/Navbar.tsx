@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { IconChevronDown } from "@tabler/icons-react";
+import { ACTIVITIES } from "@/features/activities/data/activities";
 
 export default function NavbarDemo() {
     const navItems = [
@@ -37,13 +38,10 @@ export default function NavbarDemo() {
             link: "/activities",
             children: [
                 { name: "All Activities", link: "/activities" },
-                { name: "Sanitation", link: "/activities#what-we-do" },
-                { name: "House Keeping", link: "/activities#programmes" },
-                { name: "Delux Toilet Complex", link: "/activities#projects" },
-                { name: "Vocational Training", link: "/activities#field-gallery" },
-                { name: "Education", link: "/activities#get-involved" },
-                { name: "Health", link: "/activities#faqs" },
-                { name: "Social Reform", link: "/activities#faqs" },
+                ...ACTIVITIES.map((a) => ({
+                    name: a.navLabel,
+                    link: `/activities/${a.slug}`,
+                })),
             ],
         },
         {
