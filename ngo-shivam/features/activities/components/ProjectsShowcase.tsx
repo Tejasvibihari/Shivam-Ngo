@@ -34,7 +34,7 @@ const PROJECTS: Project[] = [
         location: "Location to be added",
         description:
             "Improving access to safe sanitation and hygiene for families through awareness and community support.",
-        image: { src: "/projects/sanitation.jpg", alt: "Sanitation initiative" },
+        image: { src: "/activity/sanitation-shivam-ngo.webp", alt: "Sanitation initiative" },
     },
     {
         title: "Community Cleanliness Drives",
@@ -77,16 +77,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             className="group flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/10 sm:flex-row"
         >
             <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-gradient-to-br from-accent to-secondary/30 sm:aspect-auto sm:w-2/5">
-                {!failed && (
-                    <Image
-                        src={project.image.src}
-                        alt={project.image.alt}
-                        fill
-                        sizes="(min-width: 1024px) 280px, (min-width: 640px) 40vw, 90vw"
-                        onError={() => setFailed(true)}
-                        className="object-cover transition duration-700 group-hover:scale-105"
-                    />
-                )}
+                <Image
+                    src={project.image.src}
+                    alt={project.image.alt}
+                    fill
+                    priority={index === 0}
+                    sizes="(min-width: 1024px) 280px, (min-width: 640px) 40vw, 90vw"
+                    className="object-cover transition duration-700 group-hover:scale-105"
+                />
+
                 {project.status && (
                     <span
                         className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-bold shadow-md ${STATUS_STYLES[project.status]}`}

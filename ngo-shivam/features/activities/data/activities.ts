@@ -58,7 +58,7 @@ export const ACTIVITIES: Activity[] = [
         title: "Sanitation",
         tagline: "Towards a Cleaner, Healthier and Sanitation-Friendly Society",
         icon: "droplet",
-        image: { src: "/activities/sanitation.jpg", alt: "Sanitation awareness work in the community" },
+        image: { src: "/activity/sanitation-shivam-ngo.webp", alt: "Sanitation awareness work in the community" },
         meta: {
             title: "Sanitation Awareness & FSSM in Patna, Bihar",
             description:
@@ -169,7 +169,7 @@ export const ACTIVITIES: Activity[] = [
         title: "Housekeeping Services",
         tagline: "Clean Spaces. Healthy Communities. Better Living Environments.",
         icon: "sparkles",
-        image: { src: "/activities/cleanliness.jpg", alt: "Housekeeping and cleaning services" },
+        image: { src: "/activity/shivam-house-keeping-2.webp", alt: "Housekeeping and cleaning services" },
         meta: {
             title: "Housekeeping & Facility Management Services in Patna",
             description:
