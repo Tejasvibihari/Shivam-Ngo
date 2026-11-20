@@ -261,7 +261,7 @@ export const ACTIVITIES: Activity[] = [
         title: "Shauchalaya Nirman, Ghar Ka Samman",
         tagline: "Building Toilets. Protecting Dignity. Promoting Health.",
         icon: "home",
-        image: { src: "/activities/shauchalaya.jpg", alt: "Household toilet construction in a village" },
+        image: { src: "/activity/1.webp", alt: "Household toilet construction in a village" },
         meta: {
             title: "Shauchalaya Nirman, Ghar Ka Samman | Household Toilets in Bihar",
             description:
@@ -350,7 +350,7 @@ export const ACTIVITIES: Activity[] = [
         title: "Vocational Training",
         tagline: "Empowering People Through Skills, Knowledge and Opportunities",
         icon: "tools",
-        image: { src: "/activities/vocational-training.jpg", alt: "Vocational training session for skill development" },
+        image: { src: "/activity/vocational-training.webp", alt: "Vocational training session for skill development" },
         meta: {
             title: "Vocational Training & Skill Development in Patna, Bihar",
             description:
@@ -456,7 +456,7 @@ export const ACTIVITIES: Activity[] = [
         title: "Education",
         tagline: "Educating Minds. Empowering Lives. Building a Better Future.",
         icon: "book",
-        image: { src: "/activities/education.jpg", alt: "Children learning at an education awareness programme" },
+        image: { src: "/activity/education-ngo.webp", alt: "Children learning at an education awareness programme" },
         meta: {
             title: "Education for All: Literacy & Learning Programmes in Patna",
             description:
@@ -566,7 +566,7 @@ export const ACTIVITIES: Activity[] = [
         title: "Health Programmes",
         tagline: "Promoting Better Health. Spreading Awareness. Supporting Lives.",
         icon: "heartbeat",
-        image: { src: "/activities/health-awareness.jpg", alt: "Community health awareness camp" },
+        image: { src: "/activity/health.webp", alt: "Community health awareness camp" },
         meta: {
             title: "Health Programmes & Community Health Awareness in Patna",
             description:
@@ -682,7 +682,7 @@ export const ACTIVITIES: Activity[] = [
         title: "Social Reforms",
         tagline: "Building Awareness. Promoting Equality. Transforming Society.",
         icon: "users",
-        image: { src: "/activities/social-development.jpg", alt: "Community awareness gathering on social issues" },
+        image: { src: "/activity/5 (2).webp", alt: "Community awareness gathering on social issues" },
         meta: {
             title: "Social Reforms: Equality, Awareness & Women's Empowerment",
             description:
