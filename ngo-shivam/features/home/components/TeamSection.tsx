@@ -25,17 +25,17 @@ const MEMBERS: Member[] = [
     {
         name: "Raushan Kumar",
         role: "Chairman",
-        photo: "/team/raushan-kumar.jpg",
+        photo: "/management/raushan.webp",
     },
     {
         name: "Shambhu Prasad Singh",
         role: "Secretary",
-        photo: "/team/shambhu-prasad-singh.jpg",
+        photo: "/management/shambhu.webp",
     },
     {
         name: "Durganand Thakur",
         role: "Treasurer",
-        photo: "/team/durganand-thakur.jpg",
+        photo: "/management/durganand.webp",
     },
 ];
 /* ===================================================================== */

@@ -36,28 +36,28 @@ const PROJECTS: Project[] = [
         location: "Location to be added",
         description:
             "Improving access to safe sanitation and hygiene for families through awareness and community support.",
-        image: { src: "/projects/sanitation.jpg", alt: "Sanitation initiative" },
+        image: { src: "/activity/sanitation-shivam-ngo.webp", alt: "Sanitation initiative" },
     },
     {
         title: "Community Cleanliness Drives",
         location: "Location to be added",
         description:
             "Volunteer-led clean-ups that keep streets, shared spaces and neighbourhoods clean and healthy.",
-        image: { src: "/projects/cleanliness.jpg", alt: "Community cleanliness drive" },
+        image: { src: "/activity/4 (2).webp", alt: "Community cleanliness drive" },
     },
     {
         title: "Public Toilet Facilities",
         location: "Location to be added",
         description:
             "Building and maintaining public toilet facilities so that safe sanitation is available to everyone.",
-        image: { src: "/projects/toilets.jpg", alt: "Public toilet facility" },
+        image: { src: "/activity/deluxe-toilet-shivam-ngo.webp", alt: "Public toilet facility" },
     },
     {
         title: "Waste-Management Activities",
         location: "Location to be added",
         description:
             "Encouraging responsible waste collection and disposal to reduce litter and protect community health.",
-        image: { src: "/projects/waste-management.jpg", alt: "Waste-management activity" },
+        image: { src: "/activity/shivam-ngo-sanitation-5.webp", alt: "Waste-management activity" },
     },
 ];
 /* ===================================================================== */
