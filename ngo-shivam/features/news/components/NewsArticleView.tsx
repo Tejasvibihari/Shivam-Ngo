@@ -61,7 +61,7 @@ export default function NewsArticleView({ item }: { item: NewsItem }) {
                         <span lang="en" hidden={lang !== "en"}>{item.title.en}</span>
                     </>
                 }
-                breadcrumbs={[{ label: "News & Events", href: "/news" }, { label: "Deluxe Public Toilets" }]}
+                breadcrumbs={[{ label: "News & Events", href: "/news" }, { label: item.title.en }]}
             />
 
             <article className="w-full bg-background px-6 py-14 sm:py-20">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ActivityDetail from "@/features/activities/components/ActivityDetail";
 import { ACTIVITIES, getActivity } from "@/features/activities/data/activities";
+import { buildMetadata } from "@/lib/seo";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -15,16 +16,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const activity = getActivity(slug);
     if (!activity) return {};
 
-    return {
-        title: `${activity.meta.title} | Shivam Jan Swasthya Evem Sarwangin Vikash Kendra`,
+    return buildMetadata({
+        title: activity.meta.title,
         description: activity.meta.description,
         keywords: activity.meta.keywords,
-        openGraph: {
-            type: "article",
-            title: activity.meta.title,
-            description: activity.meta.description,
-        },
-    };
+        path: `/activities/${slug}`,
+        image: { url: activity.image.src, alt: activity.image.alt },
+    });
 }
 
 export default async function ActivityPage({ params }: PageProps) {

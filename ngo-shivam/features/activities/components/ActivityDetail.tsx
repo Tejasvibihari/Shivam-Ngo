@@ -10,6 +10,7 @@ import AboutCta from "@/features/about/components/AboutCta";
 import ActivityImage from "@/features/activities/components/ActivityImage";
 import { ACTIVITY_ICONS } from "@/features/activities/components/activityIcons";
 import { ACTIVITIES, type Activity, type ActivityBlock } from "@/features/activities/data/activities";
+import { absoluteUrl, ORG_ID, WEBSITE_ID } from "@/lib/site";
 
 function Block({ block }: { block: ActivityBlock }) {
     return (
@@ -24,7 +25,7 @@ function Block({ block }: { block: ActivityBlock }) {
     );
 }
 
-/** Structured data (WebPage + BreadcrumbList + FAQPage) so search engines understand the page. */
+/** Structured data (WebPage + FAQPage) so search engines understand the page. The BreadcrumbList is added by <Breadcrumbs>. */
 function JsonLd({ activity }: { activity: Activity }) {
     const data = {
         "@context": "https://schema.org",
@@ -32,18 +33,13 @@ function JsonLd({ activity }: { activity: Activity }) {
             {
                 "@type": "WebPage",
                 name: activity.meta.title,
+                url: absoluteUrl(`/activities/${activity.slug}`),
                 description: activity.meta.description,
                 inLanguage: "en-IN",
                 about: activity.title,
-                publisher: { "@type": "Organization", name: "Shivam Jan Swasthya Evem Sarwangin Vikash Kendra" },
-            },
-            {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                    { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-                    { "@type": "ListItem", position: 2, name: "Activities", item: "/activities" },
-                    { "@type": "ListItem", position: 3, name: activity.shortTitle },
-                ],
+                primaryImageOfPage: absoluteUrl(activity.image.src),
+                isPartOf: { "@id": WEBSITE_ID },
+                publisher: { "@type": "NGO", "@id": ORG_ID, name: "Shivam Jan Swasthya Evem Sarwangin Vikash Kendra" },
             },
             {
                 "@type": "FAQPage",

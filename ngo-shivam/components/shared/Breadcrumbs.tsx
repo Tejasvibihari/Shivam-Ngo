@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { IconChevronRight, IconHome } from "@tabler/icons-react";
+import JsonLd from "@/components/shared/JsonLd";
+import { absoluteUrl } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export type BreadcrumbItem = {
@@ -34,8 +36,22 @@ export default function Breadcrumbs({ items, showHome = true, watermark, classNa
     const trail: BreadcrumbItem[] = showHome ? [{ label: "Home", href: "/" }, ...items] : items;
     const watermarkText = watermark === false ? null : (watermark ?? items[items.length - 1]?.label);
 
+    // BreadcrumbList structured data: lets Google show "Home > Activities > Sanitation" in results.
+    // The last crumb is the current page, so it has no URL (allowed by schema.org).
+    const breadcrumbJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: trail.map((item, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: item.label,
+            ...(item.href ? { item: absoluteUrl(item.href) } : {}),
+        })),
+    };
+
     return (
         <>
+            <JsonLd data={breadcrumbJsonLd} />
             {watermarkText && (
                 <span
                     aria-hidden

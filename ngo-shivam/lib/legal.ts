@@ -31,7 +31,7 @@ const privacy: LegalDoc = {
     title: "Privacy Policy",
     shortTitle: "Privacy Policy",
     description:
-        "How Shivam Jan Swasthya Evem Sarwangin Vikash Kendra collects, uses and protects your personal information when you visit our website, contact us, volunteer or donate.",
+        "How Shivam Jan Swasthya Evem Sarwangin Vikash Kendra collects, uses and protects your personal information when you visit, contact us, volunteer or donate.",
     lead: `Your trust matters to us. This Privacy Policy explains what personal information ${ORG_NAME} ("we", "us", "our") collects, why we collect it, how we use it and the choices you have.`,
     sections: [
         {

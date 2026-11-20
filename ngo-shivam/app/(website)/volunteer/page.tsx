@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import PageHeader from "@/components/shared/PageHeader";
 import VolunteerIntro from "@/features/volunteer/components/VolunteerIntro";
 import VolunteerRoles from "@/features/volunteer/components/VolunteerRoles";
@@ -8,11 +9,13 @@ import VolunteerMoments from "@/features/volunteer/components/VolunteerMoments";
 import VolunteerFaq from "@/features/volunteer/components/VolunteerFaq";
 import VolunteerContact from "@/features/volunteer/components/VolunteerContact";
 
-export const metadata: Metadata = {
-    title: "Be a Volunteer | Shivam Jan Swasthya Evem Sarwangin Vikash Kendra",
+export const metadata: Metadata = buildMetadata({
+    title: "Volunteer with an NGO in Patna, Bihar",
     description:
-        "Join hands with Shivam Jan Swasthya Evem Sarwangin Vikash Kendra. Help with cleanliness drives, awareness campaigns, teaching and training, and community events in Patna, Bihar.",
-};
+        "Volunteer with Shivam Jan Swasthya Evem Sarwangin Vikash Kendra: join cleanliness drives, awareness campaigns, teaching and community events in Patna.",
+    path: "/volunteer",
+    keywords: ["volunteer in Patna", "NGO volunteer Bihar", "volunteer opportunities Patna", "social work volunteer", "join NGO Patna"],
+});
 
 export default function VolunteerPage() {
     return (

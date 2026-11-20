@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { IconMail, IconMapPin, IconPhone } from "@tabler/icons-react";
 import PageHeader from "@/components/shared/PageHeader";
 import AboutCta from "@/features/about/components/AboutCta";
@@ -6,18 +7,19 @@ import TeamGrid from "@/features/management/components/TeamGrid";
 import { CONTACT } from "@/lib/org";
 import { TEAM } from "@/lib/team";
 
-export const metadata: Metadata = {
-    title: "Management & Leadership | Shivam Jan Swasthya Evem Sarwangin Vikash Kendra",
+export const metadata: Metadata = buildMetadata({
+    title: "Management Team & Office Bearers",
     description:
-        "Meet the Chairman, Secretary and Treasurer who guide Shivam Jan Swasthya Evem Sarwangin Vikash Kendra, working for community health and development in Patna, Bihar.",
+        "Meet the Chairman, Secretary and Treasurer guiding Shivam Jan Swasthya Evem Sarwangin Vikash Kendra, a community health NGO in Patna, Bihar.",
+    path: "/management",
     keywords: [
         "Shivam Jan Swasthya Evem Sarwangin Vikash Kendra management",
-        "chairman message",
+        "NGO chairman message",
         "office bearers",
         "leadership team",
         "Patna community development",
     ],
-};
+});
 
 export default function ManagementPage() {
     const jsonLd = {

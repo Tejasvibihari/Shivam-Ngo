@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import PageHeader from "@/components/shared/PageHeader";
 import AboutStory from "@/features/about/components/AboutStory";
 import MissionVision from "@/features/about/components/MissionVision";
@@ -9,11 +10,13 @@ import AboutCta from "@/features/about/components/AboutCta";
 import WhatWeDoSection from "@/features/home/components/WhatWeDoSection";
 import TeamSection from "@/features/home/components/TeamSection";
 
-export const metadata: Metadata = {
-    title: "About Us | Shivam Jan Swasthya Evem Sarwangin Vikash Kendra",
+export const metadata: Metadata = buildMetadata({
+    title: "About Us – Community Health NGO in Patna",
     description:
-        "Learn about our vision, mission, objectives and the people behind Shivam Jan Swasthya Evem Sarwangin Vikash Kendra, working for community health, sanitation and all-round development in Patna, Bihar since 2004.",
-};
+        "Our vision, mission and eight objectives: Shivam Jan Swasthya Evem Sarwangin Vikash Kendra, a Patna NGO for health and sanitation since 2004.",
+    path: "/about",
+    keywords: ["about Shivam NGO", "NGO vision and mission", "community health NGO Patna", "NGO objectives Bihar", "NGO since 2004"],
+});
 
 export default function AboutPage() {
     return (

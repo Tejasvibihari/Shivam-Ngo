@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import PageHeader from "@/components/shared/PageHeader";
 import AboutCta from "@/features/about/components/AboutCta";
 import NewsGrid from "@/features/news/components/NewsGrid";
 import { NEWS_ITEMS } from "@/lib/news";
+import { absoluteUrl } from "@/lib/site";
 
-export const metadata: Metadata = {
-    title: "News & Media Coverage | Shivam Jan Swasthya Evem Sarwangin Vikash Kendra",
+export const metadata: Metadata = buildMetadata({
+    title: "News & Media Coverage – NGO Work in Bihar",
     description:
         "Newspaper coverage of the health, sanitation, education and community development work of Shivam Jan Swasthya Evem Sarwangin Vikash Kendra in Patna, Bihar.",
+    path: "/news",
     keywords: [
         "Shivam Jan Swasthya Evem Sarwangin Vikash Kendra news",
         "Patna community development news",
@@ -15,7 +18,7 @@ export const metadata: Metadata = {
         "sanitation awareness news Patna",
         "newspaper coverage",
     ],
-};
+});
 
 export default function NewsPage() {
     // structured data: the date is included only for items that have one
@@ -23,6 +26,7 @@ export default function NewsPage() {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
         name: "News & Media Coverage",
+        url: absoluteUrl("/news"),
         inLanguage: "en-IN",
         mainEntity: {
             "@type": "ItemList",
@@ -34,10 +38,10 @@ export default function NewsPage() {
                     headline: n.title.en,
                     alternativeHeadline: n.title.hi,
                     description: n.metaDescription,
-                    url: `/news/${n.slug}`,
+                    url: absoluteUrl(`/news/${n.slug}`),
                     ...(n.date ? { datePublished: n.date } : {}),
                     ...(n.publication ? { publisher: { "@type": "Organization", name: n.publication } } : {}),
-                    image: n.image,
+                    image: absoluteUrl(n.image),
                 },
             })),
         },

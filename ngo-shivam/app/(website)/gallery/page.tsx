@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import PageHeader from "@/components/shared/PageHeader";
 import GalleryGrid from "@/features/gallery/components/GalleryGrid";
 import { GALLERY_ITEMS } from "@/lib/gallery";
 
-export const metadata: Metadata = {
-    title: "Gallery | Shivam Jan Swasthya Evem Sarwangin Vikash Kendra",
+export const metadata: Metadata = buildMetadata({
+    title: "Photo Gallery – Health Camps & Awareness Drives",
     description:
-        "Photos from our health camps, awareness drives, community programmes and volunteers on the ground.",
-};
+        "Photos of health camps, sanitation drives, awareness campaigns and volunteers from our community work in Patna, Bihar.",
+    path: "/gallery",
+    keywords: ["NGO photo gallery Patna", "health camp photos Bihar", "sanitation drive photos", "volunteer photos Patna"],
+});
 
 export default function GalleryPage() {
     return (

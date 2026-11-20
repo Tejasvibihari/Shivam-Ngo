@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import AboutCta from "@/features/about/components/AboutCta";
 import NewsArticleView from "@/features/news/components/NewsArticleView";
 import { NEWS_ITEMS, getNewsItem } from "@/lib/news";
+import { buildMetadata } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -14,18 +16,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const { slug } = await params;
     const item = getNewsItem(slug);
     if (!item) return {};
-    return {
-        title: `${item.title.en} | Shivam Jan Swasthya Evem Sarwangin Vikash Kendra`,
+    return buildMetadata({
+        title: item.title.en,
         description: item.metaDescription,
         keywords: item.keywords,
-        openGraph: {
-            type: "article",
-            title: item.title.en,
-            description: item.metaDescription,
-            images: [{ url: item.image, alt: item.imageAlt.en }],
-            ...(item.date ? { publishedTime: item.date } : {}),
-        },
-    };
+        path: `/news/${slug}`,
+        type: "article",
+        publishedTime: item.date,
+        image: { url: item.image, alt: item.imageAlt.en },
+    });
 }
 
 export default async function NewsArticlePage({ params }: PageProps) {
@@ -43,7 +42,9 @@ export default async function NewsArticlePage({ params }: PageProps) {
         articleSection: item.category.en,
         keywords: item.keywords.join(", "),
         inLanguage: ["hi", "en"],
-        image: item.image,
+        url: absoluteUrl(`/news/${item.slug}`),
+        mainEntityOfPage: absoluteUrl(`/news/${item.slug}`),
+        image: absoluteUrl(item.image),
         ...(item.date ? { datePublished: item.date } : {}),
         ...(item.publication ? { publisher: { "@type": "Organization", name: item.publication } } : {}),
     };

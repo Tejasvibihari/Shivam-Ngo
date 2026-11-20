@@ -364,7 +364,7 @@ export default function HeroSection({
                 className="relative z-20 mx-auto flex max-w-2xl flex-col items-center text-center"
             >
                 <span className="rounded-full border border-primary/30 bg-background/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary backdrop-blur">
-                    Health &amp; Holistic Development
+                    NGO in Patna, Bihar &middot; Health &amp; Holistic Development
                 </span>
 
                 <h1 className="mt-6 text-4xl font-bold tracking-tight text-brand-dark sm:text-5xl lg:text-6xl">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import PageHeader from "@/components/shared/PageHeader";
 import ActivitiesOverview from "@/features/activities/components/ActivitiesOverview";
 import ProgrammeTypes from "@/features/activities/components/ProgrammeTypes";
@@ -8,11 +9,21 @@ import GetInvolved from "@/features/activities/components/GetInvolved";
 import ActivitiesFaq from "@/features/activities/components/ActivitiesFaq";
 import AboutCta from "@/features/about/components/AboutCta";
 
-export const metadata: Metadata = {
-    title: "Activities | Shivam Jan Swasthya Evem Sarwangin Vikash Kendra",
+export const metadata: Metadata = buildMetadata({
+    title: "Activities: Sanitation, Health & Skill Training",
     description:
-        "Explore our work in sanitation, housekeeping services, household toilets, vocational training, education, health programmes and social reforms in Patna, Bihar, plus our projects and ways to get involved.",
-};
+        "Sanitation, housekeeping services, household toilets, vocational training, education, health programmes and social reforms by our NGO in Patna, Bihar.",
+    path: "/activities",
+    keywords: [
+        "NGO activities Patna",
+        "sanitation NGO Bihar",
+        "household toilet construction Bihar",
+        "vocational training Patna",
+        "health programmes Bihar",
+        "housekeeping services Patna",
+        "social reforms NGO",
+    ],
+});
 
 export default function ActivitiesPage() {
     return (
