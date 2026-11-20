@@ -29,8 +29,10 @@ const COLUMNS: { title: string; links: FooterLink[] }[] = [
             { label: "Home", href: "/" },
             { label: "Gallery", href: "/gallery" },
             { label: "About", href: "/about" },
+            { label: "News & Events", href: "/news" },
             { label: "Activities", href: "/activities" },
             { label: "Contact", href: "/contact" },
+            { label: "Management", href: "/management" },
         ],
     },
     {
@@ -55,7 +57,7 @@ const COLUMNS: { title: string; links: FooterLink[] }[] = [
         links: [
             { label: "Donate", href: "/#donate" },
             { label: "Be a Volunteer", href: "/volunteer" },
-            { label: "Login", href: "/login" },
+            // { label: "Login", href: "/login" },
         ],
     },
 ];
