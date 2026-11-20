@@ -1,15 +1,10 @@
-"use client";
-
-import { useState } from "react";
-import Image from "next/image";
-import { IconCalendar, IconNews, IconZoomIn } from "@tabler/icons-react";
-import GalleryLightbox from "@/features/gallery/components/GalleryLightbox";
+import Link from "next/link";
+import { IconArrowRight, IconCalendar, IconNews } from "@tabler/icons-react";
+import NewsImage from "@/features/news/components/NewsImage";
 import { formatNewsDate, type NewsItem } from "@/lib/news";
 
-/** Grid of newspaper cuttings. Click a cutting to read it full-size (Esc closes, arrow keys browse). */
+/** Grid of news cards. Each card opens the full article (Hindi by default, English available). */
 export default function NewsGrid({ items }: { items: NewsItem[] }) {
-    const [open, setOpen] = useState<number | null>(null);
-
     if (items.length === 0) {
         return (
             <section className="w-full bg-background px-6 py-24">
@@ -26,70 +21,68 @@ export default function NewsGrid({ items }: { items: NewsItem[] }) {
         );
     }
 
-    // the shared photo viewer expects gallery-shaped items
-    const viewerItems = items.map((n) => ({
-        id: n.id,
-        src: n.image.src,
-        alt: n.image.alt ?? `Newspaper cutting: ${n.title}`,
-        caption: n.title,
-        category: "community" as const,
-    }));
-
     return (
         <section className="relative w-full bg-background px-6 py-20 sm:py-24">
             <div className="mx-auto grid max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {items.map((n, i) => {
+                {items.map((n) => {
                     const date = formatNewsDate(n.date);
+                    const href = `/news/${n.slug}`;
                     return (
                         <article
-                            key={n.id}
+                            key={n.slug}
                             className="flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg"
                         >
-                            <button
-                                type="button"
-                                onClick={() => setOpen(i)}
-                                aria-label={`Open the newspaper cutting: ${n.title}`}
-                                className="group relative block aspect-[4/5] w-full overflow-hidden bg-muted"
+                            <Link
+                                href={href}
+                                tabIndex={-1}
+                                aria-hidden
+                                className="group relative block aspect-[4/3] w-full overflow-hidden bg-muted"
                             >
-                                <Image
-                                    src={n.image.src}
-                                    alt={n.image.alt ?? `Newspaper cutting: ${n.title}`}
-                                    fill
+                                <NewsImage
+                                    src={n.image}
+                                    alt={n.imageAlt.hi}
                                     sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 90vw"
-                                    className="object-contain p-2 transition duration-500 group-hover:scale-[1.03]"
+                                    className="object-cover transition duration-500 group-hover:scale-105"
                                 />
-                                <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-brand-dark/80 px-3 py-1.5 text-xs font-semibold text-white opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
-                                    <IconZoomIn size={14} aria-hidden />
-                                    Read full cutting
-                                </span>
-                            </button>
+                            </Link>
 
                             <div className="flex flex-1 flex-col p-6">
-                                {(n.publication || date) && (
-                                    <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold uppercase tracking-wider text-primary">
-                                        {n.publication && <span>{n.publication}</span>}
-                                        {date && (
-                                            <time dateTime={n.date} className="inline-flex items-center gap-1">
-                                                <IconCalendar size={14} aria-hidden />
-                                                {date}
-                                            </time>
-                                        )}
-                                    </p>
-                                )}
-                                <h2 className="mt-2 text-lg font-bold leading-snug text-brand-dark">{n.title}</h2>
-                                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{n.summary}</p>
+                                <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold uppercase tracking-wider text-primary">
+                                    <span lang="hi">{n.category.hi}</span>
+                                    {n.publication && <span>{n.publication}</span>}
+                                    {date && (
+                                        <time dateTime={n.date} className="inline-flex items-center gap-1">
+                                            <IconCalendar size={14} aria-hidden />
+                                            {date}
+                                        </time>
+                                    )}
+                                </p>
+                                <h2 lang="hi" className="mt-2 text-lg font-bold leading-snug text-brand-dark">
+                                    {n.title.hi}
+                                </h2>
+                                <p lang="en" className="mt-1 text-sm font-medium text-foreground/70">
+                                    {n.title.en}
+                                </p>
+                                <p lang="hi" className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                                    {n.summary.hi}
+                                </p>
+                                <Link
+                                    href={href}
+                                    aria-label={`Read more: ${n.title.en}`}
+                                    className="group/link mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition duration-200 hover:-translate-y-0.5 hover:brightness-105"
+                                >
+                                    Read more
+                                    <IconArrowRight
+                                        size={16}
+                                        aria-hidden
+                                        className="transition-transform duration-200 group-hover/link:translate-x-1"
+                                    />
+                                </Link>
                             </div>
                         </article>
                     );
                 })}
             </div>
-
-            <GalleryLightbox
-                items={viewerItems}
-                index={open}
-                onClose={() => setOpen(null)}
-                onIndexChange={setOpen}
-            />
         </section>
     );
 }
