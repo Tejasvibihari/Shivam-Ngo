@@ -30,7 +30,7 @@ export default function NavbarDemo() {
             link: "/about",
         },
         {
-            name: "News & Events",
+            name: "News",
             link: "/news",
         },
         {

@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { IconCheck, IconSend } from "@tabler/icons-react";
-import { CONTACT } from "@/lib/org";
+import FormStatus, { HoneypotField } from "@/components/shared/FormStatus";
+import { useFormSubmit } from "@/lib/use-form-submit";
 import { ROLES } from "@/features/volunteer/components/VolunteerRoles";
 
 /* ============================== CONTENT ============================== */
@@ -30,37 +31,28 @@ const GOOD_TO_KNOW = [
 const fieldClass =
     "mt-2 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground shadow-xs outline-none transition placeholder:text-muted-foreground/70 focus:border-primary focus:ring-4 focus:ring-primary/15";
 
+const EMPTY_FORM = {
+    name: "",
+    phone: "",
+    email: "",
+    city: "",
+    interest: INTERESTS[0],
+    availability: AVAILABILITY[0],
+    message: "",
+};
+
 export default function VolunteerForm() {
-    const [form, setForm] = useState({
-        name: "",
-        phone: "",
-        email: "",
-        city: "",
-        interest: INTERESTS[0],
-        availability: AVAILABILITY[0],
-        message: "",
-    });
+    const [form, setForm] = useState(EMPTY_FORM);
+    const { status, error, handleSubmit, sending } = useFormSubmit("volunteer", "Volunteer page");
 
     const update =
         (key: keyof typeof form) =>
         (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
             setForm((f) => ({ ...f, [key]: e.target.value }));
 
-    // There is no backend yet, so the form opens the visitor's email app with the details filled in.
-    const onSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const subject = `Volunteer application: ${form.interest}`;
-        const lines = [
-            `Name: ${form.name}`,
-            `Phone: ${form.phone}`,
-            form.email && `Email: ${form.email}`,
-            form.city && `Area / city: ${form.city}`,
-            `Interested in: ${form.interest}`,
-            `Availability: ${form.availability}`,
-        ].filter(Boolean) as string[];
-        const body = [...lines, "", form.message].join("\n");
-        window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    };
+    // Sends the form to /api/forms, which emails it to the NGO inbox.
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) =>
+        handleSubmit(e, form, () => setForm(EMPTY_FORM));
 
     return (
         <section id="apply" className="relative w-full scroll-mt-24 bg-brand-light px-6 py-24 sm:py-28">
@@ -194,19 +186,27 @@ export default function VolunteerForm() {
                         />
                     </label>
 
+                    <HoneypotField />
+
                     <button
                         type="submit"
-                        className="group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition duration-200 hover:-translate-y-0.5 hover:brightness-110"
+                        disabled={sending}
+                        className="group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition duration-200 hover:-translate-y-0.5 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
                     >
-                        Send my application
+                        {sending ? "Sending..." : "Send my application"}
                         <IconSend
                             size={20}
                             aria-hidden
                             className="transition-transform duration-200 group-hover:translate-x-1"
                         />
                     </button>
+                    <FormStatus
+                        status={status}
+                        error={error}
+                        successMessage="Thank you! Your application has been sent. Our team will get back to you soon."
+                    />
                     <p className="mt-3 text-center text-xs text-muted-foreground">
-                        This opens your email app with your details ready to send.
+                        Your message goes straight to our team.
                     </p>
                 </motion.form>
             </div>
