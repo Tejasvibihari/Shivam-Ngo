@@ -3,9 +3,9 @@
  * Used on the server (validation + email layout). Contains no secrets.
  */
 
-export type FormType = "contact" | "volunteer";
+export type FormType = "contact" | "volunteer" | "career";
 
-type FieldKind = "text" | "phone" | "email" | "longtext";
+type FieldKind = "text" | "phone" | "email" | "url" | "longtext";
 
 type FieldDef = {
     key: string;
@@ -31,17 +31,30 @@ export const FORM_FIELDS: Record<FormType, FieldDef[]> = {
         { key: "availability", label: "Availability", kind: "text" },
         { key: "message", label: "Message", kind: "longtext" },
     ],
+    career: [
+        { key: "name", label: "Name", kind: "text", required: true },
+        { key: "phone", label: "Phone", kind: "phone", required: true },
+        { key: "email", label: "Email", kind: "email", required: true },
+        { key: "city", label: "Area / city", kind: "text" },
+        { key: "position", label: "Position applying for", kind: "text", required: true },
+        { key: "qualification", label: "Highest qualification", kind: "text", required: true },
+        { key: "experience", label: "Experience", kind: "text", required: true },
+        { key: "resumeLink", label: "CV / profile link", kind: "url" },
+        { key: "message", label: "Why work with us", kind: "longtext" },
+    ],
 };
 
 export const FORM_TITLES: Record<FormType, string> = {
     contact: "Contact form",
     volunteer: "Volunteer application",
+    career: "Job application",
 };
 
 const MAX_LENGTH: Record<FieldKind, number> = {
     text: 200,
     phone: 25,
     email: 254,
+    url: 500,
     longtext: 5000,
 };
 
@@ -66,7 +79,7 @@ function clean(value: unknown, kind: FieldKind): string {
 }
 
 export function isFormType(value: unknown): value is FormType {
-    return value === "contact" || value === "volunteer";
+    return value === "contact" || value === "volunteer" || value === "career";
 }
 
 export function parseForm(raw: unknown): ParseResult {
@@ -96,6 +109,9 @@ export function parseForm(raw: unknown): ParseResult {
         if (value && field.kind === "email" && !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(value)) {
             return { ok: false, error: "Please enter a valid email address." };
         }
+        if (value && field.kind === "url" && !/^https?:\/\/[^\s<>]+$/i.test(value)) {
+            return { ok: false, error: "Please enter a valid link starting with http:// or https://." };
+        }
         if (value && field.kind === "phone") {
             const digits = value.replace(/\D/g, "");
             if (!/^[+\d\s().-]+$/.test(value) || digits.length < 7 || digits.length > 15) {
@@ -113,6 +129,9 @@ export function parseForm(raw: unknown): ParseResult {
 export function subjectFor({ type, values }: ParsedForm): string {
     if (type === "contact") {
         return `${values.subject}: message from ${values.name}`;
+    }
+    if (type === "career") {
+        return `Job application: ${values.position} (${values.name})`;
     }
     return `Volunteer application: ${values.interest} (${values.name})`;
 }
