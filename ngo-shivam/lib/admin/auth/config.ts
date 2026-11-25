@@ -1,5 +1,6 @@
 import "server-only";
 import { z } from "zod";
+import { pinSchema, type Role } from "@/lib/admin/db/models";
 
 /**
  * Authentication settings. Everything comes from environment variables and is
@@ -43,6 +44,51 @@ export const SESSION_TOUCH_MS = 5 * 60 * 1000; // how often lastSeenAt is refres
 export const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 export const LOGIN_MAX_PER_IP = 20;
 export const LOGIN_MAX_PER_EMAIL = 10;
+
+/**
+ * Signup (see signup-pin.ts). Every attempt counts, successful or not, so a valid
+ * PIN cannot be used to mass-create accounts either.
+ * - per IP: stops one machine guessing the PIN (needs TRUST_PROXY, see below);
+ * - global: still protects the PIN when the client IP is unknown. 20 attempts an
+ *   hour is ~480 guesses a day against a 10^6 (6-digit) minimum search space.
+ */
+export const SIGNUP_WINDOW_MS = 15 * 60 * 1000;
+export const SIGNUP_MAX_PER_IP = 5;
+export const SIGNUP_GLOBAL_WINDOW_MS = 60 * 60 * 1000;
+export const SIGNUP_MAX_GLOBAL = 20;
+
+/** Changing the PIN requires the current PIN, so a stolen Super Admin session cannot brute-force it. */
+export const PIN_CHANGE_WINDOW_MS = 15 * 60 * 1000;
+export const PIN_CHANGE_MAX_PER_USER = 5;
+
+/**
+ * Role given to every account created through signup. It is a constant, never
+ * taken from the request, and is deliberately NOT "super_admin": the only way
+ * to become Super Admin is the one-time setup process.
+ */
+export const SIGNUP_DEFAULT_ROLE: Role = "editor";
+
+/** SIGNUP_ENABLED=false closes signup completely (kill switch), whatever the PIN. */
+export function signupKillSwitchOn(): boolean {
+    return (process.env.SIGNUP_ENABLED ?? "").trim().toLowerCase() === "false";
+}
+
+let warnedBadInitialPin = false;
+
+/** Optional first PIN from SIGNUP_PIN_INITIAL. Returns null when unset or invalid. */
+export function getInitialSignupPin(): string | null {
+    const raw = (process.env.SIGNUP_PIN_INITIAL ?? "").trim();
+    if (!raw) return null;
+    const parsed = pinSchema.safeParse(raw);
+    if (!parsed.success) {
+        if (!warnedBadInitialPin) {
+            warnedBadInitialPin = true;
+            console.error("[auth] SIGNUP_PIN_INITIAL is ignored: it must be 6 to 12 digits.");
+        }
+        return null;
+    }
+    return parsed.data;
+}
 
 const isProd = process.env.NODE_ENV === "production";
 

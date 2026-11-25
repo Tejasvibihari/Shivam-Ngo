@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { emailSchema } from "@/lib/admin/db/models";
+import { emailSchema, nameSchema, pinSchema } from "@/lib/admin/db/models";
 
 /**
  * Input rules for authentication. No `server-only`, so forms can reuse them.
@@ -27,3 +27,31 @@ export const loginSchema = z.strictObject({
     password: z.string().min(1, "Password is required.").max(PASSWORD_MAX, "Invalid email or password."),
 });
 export type LoginInput = z.infer<typeof loginSchema>;
+
+/**
+ * Signup. Strict on purpose: there is no `role` or `status` field, so a caller
+ * cannot choose their own privileges (an extra key is a 400, not ignored).
+ */
+export const signupSchema = z.strictObject({
+    name: nameSchema,
+    email: emailSchema,
+    password: newPasswordSchema,
+    pin: pinSchema,
+});
+export type SignupInput = z.infer<typeof signupSchema>;
+
+/**
+ * PUT /api/admin/settings/signup-pin. `currentPin` is optional in the schema
+ * only because the very first PIN has nothing to compare against; the route
+ * requires it whenever a PIN is already configured.
+ */
+export const changeSignupPinSchema = z
+    .strictObject({
+        currentPin: pinSchema.optional(),
+        newPin: pinSchema,
+    })
+    .refine((v) => v.currentPin === undefined || v.currentPin !== v.newPin, {
+        path: ["newPin"],
+        message: "New PIN must be different from the current PIN.",
+    });
+export type ChangeSignupPinInput = z.infer<typeof changeSignupPinSchema>;

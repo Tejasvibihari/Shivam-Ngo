@@ -1,9 +1,10 @@
 # Authentication (Task 03)
 
 Email + password login for the admin panel, with server-side sessions, rate
-limiting and a reusable authentication middleware. Signup, the one-time Super
-Admin setup and the signup PIN are separate tasks and are **not** part of this
-patch: there is deliberately no endpoint that creates users or assigns roles.
+limiting and a reusable authentication middleware. The login endpoints
+themselves create no users and assign no roles. PIN-protected signup is
+documented in `docs/signup-pin.md` (Task 04); the one-time Super Admin setup is
+a separate task.
 
 ## 1. Environment variables
 

@@ -162,7 +162,9 @@ export const AUDIT_ACTIONS = [
     "auth.login_failed",
     "auth.logout",
     "auth.signup",
+    "auth.signup_failed",
     "settings.signup_pin_changed",
+    "settings.signup_pin_change_failed",
     "user.role_changed",
     "user.status_changed",
 ] as const;

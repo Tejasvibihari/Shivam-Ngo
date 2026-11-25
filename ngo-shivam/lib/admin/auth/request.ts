@@ -1,6 +1,7 @@
 import "server-only";
 import { isIP } from "node:net";
 import { NextResponse, type NextRequest } from "next/server";
+import type { ZodError } from "zod";
 import { AuthConfigError, trustProxy } from "@/lib/admin/auth/config";
 import { DatabaseError } from "@/lib/admin/db/errors";
 
@@ -29,6 +30,16 @@ export function fail(
     const body: ApiError = { ok: false, error, code };
     if (extra.fieldErrors) body.fieldErrors = extra.fieldErrors;
     return json(body, status, extra.headers);
+}
+
+/** 400 response listing the first problem for each invalid field. */
+export function validationFail(error: ZodError) {
+    const fieldErrors: Record<string, string> = {};
+    for (const issue of error.issues) {
+        const field = String(issue.path[0] ?? "body");
+        fieldErrors[field] ??= issue.message;
+    }
+    return fail(400, "validation_error", "Please check the highlighted fields.", { fieldErrors });
 }
 
 /** Turn anything thrown inside a route into a safe response (details go to the server log only). */

@@ -12,7 +12,8 @@ import { NextResponse, type NextRequest } from "next/server";
 // (that file is server-only and reads env, so it is not imported here).
 const COOKIE = process.env.NODE_ENV === "production" ? "__Host-ngo_session" : "ngo_session";
 
-const PUBLIC_API = new Set(["/api/admin/auth/login", "/api/admin/auth/logout"]);
+// signup is public but protected by the signup PIN (see app/api/admin/auth/signup/route.ts)
+const PUBLIC_API = new Set(["/api/admin/auth/login", "/api/admin/auth/logout", "/api/admin/auth/signup"]);
 const PUBLIC_PAGES = new Set(["/admin/login", "/admin/signup", "/admin/setup"]);
 
 export function proxy(request: NextRequest) {

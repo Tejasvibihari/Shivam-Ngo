@@ -8,8 +8,8 @@ export default function robots(): MetadataRoute.Robots {
             {
                 userAgent: "*",
                 allow: "/",
-                // the form endpoint is not a page; never let crawlers hit it
-                disallow: ["/api/"],
+                // the form endpoint is not a page, and the admin panel is private
+                disallow: ["/api/", "/admin"],
             },
         ],
         sitemap: `${SITE_URL}/sitemap.xml`,

@@ -46,4 +46,7 @@ export async function resetLimit(key: string): Promise<void> {
 
 /** Keys. The e-mail is HMAC-ed so the collection never holds addresses. */
 export const loginIpKey = (ip: string) => `login:ip:${ip}`;
+export const signupIpKey = (ip: string) => `signup:ip:${ip}`;
+export const SIGNUP_GLOBAL_KEY = "signup:global";
+export const pinChangeUserKey = (userId: string) => `pin-change:user:${userId}`;
 export const loginEmailKey = (email: string) => `login:email:${hmac("rate-limit-email", email)}`;
