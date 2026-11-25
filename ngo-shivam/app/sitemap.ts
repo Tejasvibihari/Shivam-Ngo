@@ -40,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         entry("/about", 0.8, "monthly"),
         entry("/activities", 0.9, "monthly"),
         ...ACTIVITIES.map((a) => entry(`/activities/${a.slug}`, 0.8, "monthly")),
-        entry("/news", 0.7, "weekl y"),
+        entry("/news", 0.7, "weekly"),
         ...NEWS_ITEMS.map((n) => entry(`/news/${n.slug}`, 0.6, "yearly", newsLastModified(n.date))),
         entry("/volunteer", 0.7, "monthly"),
         entry("/career", 0.6, "weekly"),

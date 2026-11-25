@@ -52,6 +52,7 @@ export default function NavbarDemo() {
             name: "Management",
             link: "/management",
         },
+        { name: "Career", link: "/career" },
         {
             name: "Be a Volunteer",
             link: "/volunteer",

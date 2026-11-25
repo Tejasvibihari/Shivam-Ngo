@@ -364,18 +364,17 @@ export default function HeroSection({
                 className="relative z-20 mx-auto flex max-w-2xl flex-col items-center text-center"
             >
                 <span className="rounded-full border border-primary/30 bg-background/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary backdrop-blur">
-                    NGO in Patna, Bihar &middot; Health &amp; Holistic Development
+                    A MAJOR INITIATIVE ON SANITATION, HEALTH, ENVIRONMENT & SOCIAL REFORMS
                 </span>
 
                 <h1 className="mt-6 text-4xl font-bold tracking-tight text-brand-dark sm:text-5xl lg:text-6xl">
-                    Healthier Lives,{" "}
-                    <span className="text-primary">Stronger Communities</span>
+                    Cleaner Surroundings,{" "}
+                    <span className="text-primary">Healthier Lives, Stronger Communities</span>
                 </h1>
 
                 <p className="mt-6 max-w-xl text-base text-muted-foreground sm:text-lg">
-                    Shivam Jan Swasthya Evem Sarwangin Vikash Kendra works to bring
-                    better health and all-round development to every family in our
-                    community.
+                    Shivam Jan Swasthya Evem Sarwangin Vikash Kendra works across India to bring
+                    better lives to every family through sanitation, health, environment and social reforms.
                 </p>
 
                 <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
