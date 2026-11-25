@@ -6,6 +6,7 @@ import {
     COLLECTIONS,
     type AuditLogDoc,
     type RateLimitDoc,
+    type SessionDoc,
     type SettingDoc,
     type UserDoc,
 } from "@/lib/admin/db/models";
@@ -106,6 +107,10 @@ export async function settingsCollection(): Promise<Collection<SettingDoc>> {
 
 export async function rateLimitsCollection(): Promise<Collection<RateLimitDoc>> {
     return (await getDb()).collection<RateLimitDoc>(COLLECTIONS.rateLimits);
+}
+
+export async function sessionsCollection(): Promise<Collection<SessionDoc>> {
+    return (await getDb()).collection<SessionDoc>(COLLECTIONS.sessions);
 }
 
 export async function auditLogsCollection(): Promise<Collection<AuditLogDoc>> {

@@ -60,6 +60,21 @@ const VALIDATORS: Record<string, Document> = {
             },
         },
     },
+    [COLLECTIONS.sessions]: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["_id", "userId", "createdAt", "lastSeenAt", "expiresAt"],
+            properties: {
+                _id: { bsonType: "string", minLength: 32, maxLength: 128 },
+                userId: { bsonType: "objectId" },
+                createdAt: date,
+                lastSeenAt: date,
+                expiresAt: date,
+                ip: { bsonType: ["string", "null"], maxLength: 64 },
+                userAgent: { bsonType: ["string", "null"], maxLength: 256 },
+            },
+        },
+    },
     [COLLECTIONS.auditLogs]: {
         $jsonSchema: {
             bsonType: "object",
@@ -87,6 +102,10 @@ const INDEXES: Record<string, IndexDef[]> = {
     [COLLECTIONS.rateLimits]: [
         // MongoDB removes the document once `expiresAt` has passed.
         { key: { expiresAt: 1 }, options: { name: "expiresAt_ttl", expireAfterSeconds: 0 } },
+    ],
+    [COLLECTIONS.sessions]: [
+        { key: { expiresAt: 1 }, options: { name: "expiresAt_ttl", expireAfterSeconds: 0 } },
+        { key: { userId: 1 }, options: { name: "userId" } },
     ],
     [COLLECTIONS.auditLogs]: [
         { key: { createdAt: -1 }, options: { name: "createdAt_desc" } },

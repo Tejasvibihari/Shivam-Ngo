@@ -15,6 +15,7 @@ export const COLLECTIONS = {
     settings: "settings",
     rateLimits: "rate_limits",
     auditLogs: "audit_logs",
+    sessions: "sessions",
 } as const;
 
 /* ------------------------------------------------------------------ roles */
@@ -133,6 +134,24 @@ export interface RateLimitDoc {
     count: number;
     windowStart: Date;
     expiresAt: Date;
+}
+
+/* ------------------------------------------------------------- sessions */
+
+/**
+ * Server-side login session. The browser only holds a random token; the
+ * `_id` here is an HMAC of that token, so a database leak cannot be replayed
+ * as cookies. MongoDB deletes the document once `expiresAt` has passed.
+ */
+export interface SessionDoc {
+    _id: string;
+    userId: ObjectId;
+    createdAt: Date;
+    lastSeenAt: Date;
+    /** Absolute expiry (TTL index). */
+    expiresAt: Date;
+    ip: string | null;
+    userAgent: string | null;
 }
 
 /* ----------------------------------------------------------- audit logs */
