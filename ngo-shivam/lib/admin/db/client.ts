@@ -5,6 +5,7 @@ import { DatabaseError, redact, toDatabaseError } from "@/lib/admin/db/errors";
 import {
     COLLECTIONS,
     type AuditLogDoc,
+    type FormSubmissionDoc,
     type RateLimitDoc,
     type SessionDoc,
     type SettingDoc,
@@ -115,4 +116,8 @@ export async function sessionsCollection(): Promise<Collection<SessionDoc>> {
 
 export async function auditLogsCollection(): Promise<Collection<AuditLogDoc>> {
     return (await getDb()).collection<AuditLogDoc>(COLLECTIONS.auditLogs);
+}
+
+export async function formSubmissionsCollection(): Promise<Collection<FormSubmissionDoc>> {
+    return (await getDb()).collection<FormSubmissionDoc>(COLLECTIONS.formSubmissions);
 }

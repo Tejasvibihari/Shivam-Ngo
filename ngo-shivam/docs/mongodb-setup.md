@@ -48,6 +48,8 @@ The first time admin code calls `getDb()`, the app connects and runs
 | `settings` | signup-PIN hash, one-time-setup marker | `_id` only |
 | `rate_limits` | login / PIN attempt counters | TTL on `expiresAt` (auto-delete) |
 | `audit_logs` | security events | `createdAt`, `actorId+createdAt`, `action+createdAt` |
+| `form_submissions` | contact, volunteer, career and donation-enquiry submissions | `createdAt`, `type+createdAt` |
+| `form_uploads.files` / `form_uploads.chunks` | career photos and resumes (MongoDB GridFS) | GridFS-managed |
 
 Every collection also gets a `$jsonSchema` validator (`validationLevel: strict`,
 `validationAction: error`), so malformed documents are rejected by MongoDB even

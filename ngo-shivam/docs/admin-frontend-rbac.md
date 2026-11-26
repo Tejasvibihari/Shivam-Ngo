@@ -33,7 +33,7 @@ change applies on the next check.
 | `/admin` Dashboard | `admin:access` | Y | Y | Y |
 | `/admin/content` Content | `content:read` | Y | Y | Y |
 | `/admin/media` Media | `media:read` | Y | Y | Y |
-| `/admin/submissions` Submissions | `submissions:read` | Y | Y | |
+| `/admin/submissions` Submissions | `submissions:read` | Y | Y | Y |
 | `/admin/users` Users | `users:read` | Y | Y | |
 | `/admin/audit` Audit log | `audit:read` | Y | | |
 | `/admin/settings` Settings | `settings:read` | Y | Y | |
@@ -43,11 +43,11 @@ The menu shows exactly the "Y" pages of the role (access-denied is never listed)
 
 * **Super Admin:** Dashboard, Content, Media, Submissions, Users, Audit log, Settings
 * **Admin:** Dashboard, Content, Media, Submissions, Users, Settings
-* **Editor:** Dashboard, Content, Media
+* **Editor:** Dashboard, Content, Media, Submissions
 
 Sub-paths use the rule of their section (`/admin/users/123` needs `users:read`).
-The content, media, submissions, users, audit and settings screens are
-placeholders for later tasks; their access rules already apply.
+The submissions screen lists stored website form entries and their career uploads.
+Its API routes enforce the same role permissions as the page.
 
 ## Behaviour
 
@@ -81,7 +81,7 @@ pnpm test:authz          # existing backend authorization tests
 
 Manual (needs MongoDB; see `docs/authentication.md` to seed users). Sign in as each role:
 
-* Editor: menu has Dashboard, Content, Media. Opening `/admin/users`, `/admin/submissions`,
+* Editor: menu has Dashboard, Content, Media and Submissions. Opening `/admin/users`,
   `/admin/audit` or `/admin/settings` by URL shows "Access denied".
 * Admin: menu adds Submissions, Users, Settings. `/admin/audit` shows "Access denied".
 * Super Admin: all seven items; no page is denied.

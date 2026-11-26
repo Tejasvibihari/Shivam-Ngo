@@ -86,7 +86,7 @@ export const ADMIN_ROUTES: readonly AdminRoute[] = Object.freeze([
     {
         href: "/admin/submissions",
         label: "Submissions",
-        description: "Volunteer, career and contact form submissions.",
+        description: "Contact, volunteer, career and donation enquiry submissions.",
         requirement: { permission: "submissions:read" },
         icon: "submissions",
     },

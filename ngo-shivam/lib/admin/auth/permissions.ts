@@ -35,7 +35,7 @@ export const PERMISSIONS = [
     "media:read",
     "media:upload",
     "media:delete",
-    // volunteer / career / contact form submissions (personal data)
+    // website form submissions (personal data)
     "submissions:read",
     "submissions:delete",
     // admin accounts
@@ -79,7 +79,7 @@ export const PERMISSION_GRANTS = Object.freeze({
     "media:upload": EVERYONE,
     "media:delete": ADMINS,
 
-    "submissions:read": ADMINS,
+    "submissions:read": EVERYONE,
     "submissions:delete": ADMINS,
 
     "users:read": ADMINS,

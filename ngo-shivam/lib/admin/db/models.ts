@@ -1,5 +1,6 @@
 import type { ObjectId } from "mongodb";
 import { z } from "zod";
+import type { FormFileKind, FormType } from "@/lib/forms";
 
 /**
  * Database models for the admin panel: TypeScript document types, Zod input
@@ -16,6 +17,7 @@ export const COLLECTIONS = {
     rateLimits: "rate_limits",
     auditLogs: "audit_logs",
     sessions: "sessions",
+    formSubmissions: "form_submissions",
 } as const;
 
 /* ------------------------------------------------------------------ roles */
@@ -193,5 +195,23 @@ export interface AuditLogDoc {
     ip: string | null;
     /** Small, non-sensitive context. Never store passwords, PINs or hashes. */
     meta: Record<string, string | number | boolean>;
+    createdAt: Date;
+}
+
+/* --------------------------------------------------------- form submissions */
+
+export interface FormSubmissionFile {
+    id: ObjectId;
+    filename: string;
+    contentType: string;
+    size: number;
+}
+
+export interface FormSubmissionDoc {
+    _id: ObjectId;
+    type: FormType;
+    source: string;
+    values: Record<string, string>;
+    files: Partial<Record<FormFileKind, FormSubmissionFile>>;
     createdAt: Date;
 }

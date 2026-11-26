@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 import { IconEye, IconEyeOff, IconLoader2, IconLogin2, IconShieldLock } from "@tabler/icons-react";
 import FormStatus from "@/components/shared/FormStatus";
@@ -58,7 +57,6 @@ function Field({
  */
 export default function LoginForm({ next, reason }: { next?: string; reason?: string }) {
     const { status, signIn } = useAuth();
-    const router = useRouter();
     const destination = safeAdminPath(next);
     const notice = isLoginReason(reason) ? COPY.reasons[reason] : null;
 
@@ -70,8 +68,11 @@ export default function LoginForm({ next, reason }: { next?: string; reason?: st
 
     // Signed in (just now, or already before opening this page): go to the requested page.
     useEffect(() => {
-        if (status === "authenticated") router.replace(destination);
-    }, [status, destination, router]);
+        if (status === "authenticated") {
+            // A fresh request avoids stale App Router data from before the session cookie was set.
+            window.location.replace(destination);
+        }
+    }, [status, destination]);
 
     if (status === "authenticated") return <AuthLoading label="Redirecting..." />;
 

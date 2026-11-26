@@ -58,7 +58,7 @@ const COLUMNS: { title: string; links: FooterLink[] }[] = [
             { label: "Donate", href: "/#donate" },
             { label: "Be a Volunteer", href: "/volunteer" },
             { label: "Career", href: "/career" },
-            // { label: "Login", href: "/login" },
+            { label: "Dashboard", href: "/admin" },
         ],
     },
 ];

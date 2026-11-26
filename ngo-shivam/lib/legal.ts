@@ -48,8 +48,9 @@ const privacy: LegalDoc = {
             items: [
                 "Contact details you give us: your name, phone number and email address.",
                 "Volunteer information: where you live, the area you would like to help with and anything you tell us about your skills or interests.",
+                "Career application information: your contact details, qualifications, experience, the position you are applying for, and the resume and photo you upload.",
                 "Messages and correspondence: the content of your enquiries, emails, calls and messages.",
-                "Donation-related details, if you contact us about a contribution: your name, contact details, amount and the details needed to acknowledge it.",
+                "Donation enquiry details: your name, contact details, any intended amount and your message. The website does not collect payment or card details.",
                 "Technical information: basic details such as browser type, device and pages visited, which are usually recorded automatically by the website hosting service.",
             ],
         },
@@ -57,8 +58,8 @@ const privacy: LegalDoc = {
             id: "how-forms-work",
             heading: "3. How the forms on this website work",
             paragraphs: [
-                "The Contact form and the Volunteer form do not save your details on a database. When you submit a form, your own email application opens with a ready-to-send message addressed to us. Nothing is sent until you press send in your email application.",
-                "This means the information you include is handled by your email provider as well as by us. Please do not include sensitive information such as bank passwords, OTPs or card details in any message to us.",
+                "When you submit a Contact, Volunteer, Career or donation enquiry form, the information is sent to our server and saved in a database for our authorised team to review. A notification may also be sent to our organisation email inbox. Career resumes and photos are stored with the application and are available only to signed-in admin-panel users.",
+                "The donation enquiry form is only a request for our team to contact you; it does not process a payment. Please do not send bank passwords, OTPs, card details or other payment credentials through any form or message.",
             ],
         },
         {

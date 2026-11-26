@@ -8,10 +8,13 @@ import {
     IconHeartHandshake,
     IconMail,
     IconPhone,
+    IconSend,
     IconShare3,
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { CONTACT } from "@/lib/org";
+import FormStatus, { HoneypotField } from "@/components/shared/FormStatus";
+import { useFormSubmit } from "@/lib/use-form-submit";
 
 /* ============================== CONTENT ============================== */
 const SECTION = {
@@ -55,6 +58,17 @@ const WAYS = [
 ];
 
 const POLICY = { label: "Read our Donation Policy", href: "/donation-policy" };
+
+const EMPTY_FORM = {
+    name: "",
+    phone: "",
+    email: "",
+    amount: "",
+    message: "",
+};
+
+const fieldClass =
+    "mt-2 w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white shadow-xs outline-none transition placeholder:text-white/50 focus:border-white/60 focus:ring-4 focus:ring-white/15";
 /* ===================================================================== */
 
 function CopyRow({ label, value }: { label: string; value: string }) {
@@ -90,6 +104,15 @@ function CopyRow({ label, value }: { label: string; value: string }) {
 }
 
 export default function DonateSection() {
+    const [form, setForm] = useState(EMPTY_FORM);
+    const { status, error, handleSubmit, sending } = useFormSubmit("donation", "Home page");
+    const update =
+        (key: keyof typeof form) =>
+        (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+            setForm((current) => ({ ...current, [key]: e.target.value }));
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) =>
+        handleSubmit(e, form, () => setForm(EMPTY_FORM));
+
     const rows: { label: string; value?: string }[] = [
         { label: "UPI ID", value: PAYMENT.upiId },
         { label: "Account name", value: PAYMENT.accountName },
@@ -206,6 +229,91 @@ export default function DonateSection() {
                     >
                         {POLICY.label}
                     </Link>
+
+                    <div className="mt-7 border-t border-white/20 pt-6">
+                        <h4 className="text-lg font-bold">Request donation details</h4>
+                        <p className="mt-1 text-sm text-white/75">
+                            Leave your contact details and our team will get in touch. This form does not process payments.
+                        </p>
+                        <form onSubmit={onSubmit} className="mt-4 space-y-4">
+                            <div className="grid gap-4 sm:grid-cols-2">
+                                <label className="block text-sm font-semibold">
+                                    Name
+                                    <input
+                                        required
+                                        type="text"
+                                        autoComplete="name"
+                                        value={form.name}
+                                        onChange={update("name")}
+                                        className={fieldClass}
+                                        placeholder="Your name"
+                                    />
+                                </label>
+                                <label className="block text-sm font-semibold">
+                                    Phone
+                                    <input
+                                        required
+                                        type="tel"
+                                        autoComplete="tel"
+                                        value={form.phone}
+                                        onChange={update("phone")}
+                                        className={fieldClass}
+                                        placeholder="Your phone number"
+                                    />
+                                </label>
+                            </div>
+                            <div className="grid gap-4 sm:grid-cols-2">
+                                <label className="block text-sm font-semibold">
+                                    Email <span className="font-normal text-white/70">(optional)</span>
+                                    <input
+                                        type="email"
+                                        autoComplete="email"
+                                        value={form.email}
+                                        onChange={update("email")}
+                                        className={fieldClass}
+                                        placeholder="you@example.com"
+                                    />
+                                </label>
+                                <label className="block text-sm font-semibold">
+                                    Planned amount (INR) <span className="font-normal text-white/70">(optional)</span>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        max="99999999"
+                                        step="0.01"
+                                        value={form.amount}
+                                        onChange={update("amount")}
+                                        className={fieldClass}
+                                        placeholder="Amount"
+                                    />
+                                </label>
+                            </div>
+                            <label className="block text-sm font-semibold">
+                                Message <span className="font-normal text-white/70">(optional)</span>
+                                <textarea
+                                    rows={3}
+                                    value={form.message}
+                                    onChange={update("message")}
+                                    className={fieldClass}
+                                    placeholder="Anything you would like our team to know"
+                                />
+                            </label>
+                            <HoneypotField />
+                            <button
+                                type="submit"
+                                disabled={sending}
+                                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-cta px-6 py-3 text-sm font-bold text-cta-foreground transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
+                            >
+                                {sending ? "Sending..." : "Request a call back"}
+                                <IconSend size={18} aria-hidden />
+                            </button>
+                            <FormStatus
+                                status={status}
+                                error={error}
+                                successMessage="Thank you. Your enquiry has been saved and our team will contact you."
+                            />
+                        </form>
+                    </div>
                 </motion.div>
             </div>
         </section>

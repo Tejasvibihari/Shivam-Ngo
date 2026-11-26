@@ -6,7 +6,7 @@ import type { FormType } from "@/lib/forms";
 export type SubmitStatus = "idle" | "sending" | "success" | "error";
 
 /**
- * Posts a form to /api/forms (which emails the NGO) and tracks the status.
+ * Posts a form to /api/forms (which stores it and emails the NGO) and tracks the status.
  * Usage:  <form onSubmit={(e) => handleSubmit(e, values, () => reset())}>
  */
 export function useFormSubmit(type: FormType, source: string) {
@@ -21,16 +21,34 @@ export function useFormSubmit(type: FormType, source: string) {
         e.preventDefault();
         if (status === "sending") return;
 
-        // Hidden anti-spam field (see <HoneypotField />).
-        const website = (new FormData(e.currentTarget).get("website") as string | null) ?? "";
+        const fields = new FormData(e.currentTarget);
+        const website = (fields.get("website") as string | null) ?? "";
 
         setStatus("sending");
         setError("");
         try {
+            let body: BodyInit;
+            let headers: HeadersInit;
+            if (type === "career") {
+                const payload = new FormData();
+                payload.set("type", type);
+                payload.set("source", source);
+                payload.set("data", JSON.stringify(data));
+                payload.set("website", website);
+                for (const key of ["photo", "resume"]) {
+                    const file = fields.get(key);
+                    if (file instanceof File && file.size > 0) payload.set(key, file);
+                }
+                body = payload;
+                headers = {};
+            } else {
+                body = JSON.stringify({ type, source, data, website });
+                headers = { "Content-Type": "application/json" };
+            }
             const res = await fetch("/api/forms", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ type, source, data, website }),
+                headers,
+                body,
             });
             const json = (await res.json().catch(() => null)) as
                 | { ok?: boolean; error?: string }

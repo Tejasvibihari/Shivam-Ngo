@@ -18,7 +18,7 @@ import { ROLES, type Role } from "@/lib/admin/db/models";
 const NAV: Record<Role, string[]> = {
     super_admin: ["/admin", "/admin/content", "/admin/media", "/admin/submissions", "/admin/users", "/admin/audit", "/admin/settings"],
     admin: ["/admin", "/admin/content", "/admin/media", "/admin/submissions", "/admin/users", "/admin/settings"],
-    editor: ["/admin", "/admin/content", "/admin/media"],
+    editor: ["/admin", "/admin/content", "/admin/media", "/admin/submissions"],
 };
 
 const hrefs = (role: unknown) => navItemsForRole(role).map((item) => item.href);
@@ -57,10 +57,10 @@ describe("page access per role", () => {
         assert.equal(canAccessPath("admin", "/admin/submissions"), true);
     });
 
-    it("Editor may only open dashboard, content, media, their own profile and the access-denied page", () => {
+    it("Editor may open dashboard, content, media, submissions, their own profile and the access-denied page", () => {
         const allowed = ADMIN_ROUTES.filter((r) => canAccessPath("editor", r.href)).map((r) => r.href);
-        assert.deepEqual(allowed, ["/admin", "/admin/content", "/admin/media", "/admin/profile", ACCESS_DENIED_PATH]);
-        for (const denied of ["/admin/users", "/admin/audit", "/admin/settings", "/admin/submissions"]) {
+        assert.deepEqual(allowed, ["/admin", "/admin/content", "/admin/media", "/admin/submissions", "/admin/profile", ACCESS_DENIED_PATH]);
+        for (const denied of ["/admin/users", "/admin/audit", "/admin/settings"]) {
             assert.equal(canAccessPath("editor", denied), false, denied);
         }
     });

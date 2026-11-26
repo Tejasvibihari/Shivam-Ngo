@@ -89,6 +89,47 @@ const VALIDATORS: Record<string, Document> = {
             },
         },
     },
+    [COLLECTIONS.formSubmissions]: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["type", "source", "values", "files", "createdAt"],
+            properties: {
+                type: { enum: ["contact", "volunteer", "career", "donation"] },
+                source: { bsonType: "string", minLength: 1, maxLength: 60 },
+                values: {
+                    bsonType: "object",
+                    maxProperties: 20,
+                    additionalProperties: { bsonType: "string", maxLength: 5000 },
+                },
+                files: {
+                    bsonType: "object",
+                    properties: {
+                        photo: {
+                            bsonType: "object",
+                            required: ["id", "filename", "contentType", "size"],
+                            properties: {
+                                id: { bsonType: "objectId" },
+                                filename: { bsonType: "string", maxLength: 180 },
+                                contentType: { bsonType: "string", maxLength: 100 },
+                                size: { bsonType: ["int", "long"], minimum: 1, maximum: 5242880 },
+                            },
+                        },
+                        resume: {
+                            bsonType: "object",
+                            required: ["id", "filename", "contentType", "size"],
+                            properties: {
+                                id: { bsonType: "objectId" },
+                                filename: { bsonType: "string", maxLength: 180 },
+                                contentType: { bsonType: "string", maxLength: 100 },
+                                size: { bsonType: ["int", "long"], minimum: 1, maximum: 10485760 },
+                            },
+                        },
+                    },
+                },
+                createdAt: date,
+            },
+        },
+    },
 };
 
 const INDEXES: Record<string, IndexDef[]> = {
@@ -111,6 +152,10 @@ const INDEXES: Record<string, IndexDef[]> = {
         { key: { createdAt: -1 }, options: { name: "createdAt_desc" } },
         { key: { actorId: 1, createdAt: -1 }, options: { name: "actor_createdAt" } },
         { key: { action: 1, createdAt: -1 }, options: { name: "action_createdAt" } },
+    ],
+    [COLLECTIONS.formSubmissions]: [
+        { key: { createdAt: -1, _id: -1 }, options: { name: "createdAt_desc" } },
+        { key: { type: 1, createdAt: -1 }, options: { name: "type_createdAt" } },
     ],
 };
 

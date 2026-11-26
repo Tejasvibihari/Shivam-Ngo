@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import { IconCheck, IconSend } from "@tabler/icons-react";
 import FormStatus, { HoneypotField } from "@/components/shared/FormStatus";
@@ -25,9 +25,9 @@ const POSITIONS = [
 
 /** Shown beside the form. */
 const GOOD_TO_KNOW = [
-    "Applications are sent straight to our team by email",
-    "Add a link to your CV (Google Drive, LinkedIn or similar) so we can see your experience",
-    "If you use Google Drive, set the link to \"Anyone with the link can view\"",
+    "Your application is saved for the hiring team to review",
+    "Attach your resume as a PDF, DOC or DOCX file (up to 10 MB)",
+    "Attach a JPG, PNG or WebP photo (up to 5 MB)",
     "Only shortlisted candidates will be contacted",
 ];
 /* ===================================================================== */
@@ -43,12 +43,12 @@ const EMPTY_FORM = {
     position: POSITIONS[0],
     qualification: "",
     experience: EXPERIENCE_LEVELS[0],
-    resumeLink: "",
     message: "",
 };
 
 export default function CareerForm() {
     const [form, setForm] = useState(EMPTY_FORM);
+    const formRef = useRef<HTMLFormElement>(null);
     const { status, error, handleSubmit, sending } = useFormSubmit("career", "Career page");
 
     const update =
@@ -56,9 +56,11 @@ export default function CareerForm() {
         (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
             setForm((f) => ({ ...f, [key]: e.target.value }));
 
-    // Sends the form to /api/forms, which emails it to the NGO inbox.
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) =>
-        handleSubmit(e, form, () => setForm(EMPTY_FORM));
+        handleSubmit(e, form, () => {
+            setForm(EMPTY_FORM);
+            formRef.current?.reset();
+        });
 
     return (
         <section id="apply" className="relative w-full scroll-mt-24 bg-brand-light px-6 py-24 sm:py-28">
@@ -94,6 +96,7 @@ export default function CareerForm() {
                 </motion.div>
 
                 <motion.form
+                    ref={formRef}
                     onSubmit={onSubmit}
                     initial={{ opacity: 0, x: 32 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -192,17 +195,34 @@ export default function CareerForm() {
                         />
                     </label>
 
-                    <label className="mt-4 block text-sm font-semibold text-foreground">
-                        Link to your CV / profile <span className="font-normal text-muted-foreground">(optional)</span>
-                        <input
-                            type="url"
-                            inputMode="url"
-                            value={form.resumeLink}
-                            onChange={update("resumeLink")}
-                            placeholder="https://drive.google.com/..."
-                            className={fieldClass}
-                        />
-                    </label>
+                    <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                        <label className="block text-sm font-semibold text-foreground">
+                            Resume <span className="text-destructive">*</span>
+                            <input
+                                required
+                                type="file"
+                                name="resume"
+                                accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                className={fieldClass}
+                            />
+                            <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                                PDF, DOC or DOCX. Max 10 MB.
+                            </span>
+                        </label>
+                        <label className="block text-sm font-semibold text-foreground">
+                            Photo <span className="text-destructive">*</span>
+                            <input
+                                required
+                                type="file"
+                                name="photo"
+                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                                className={fieldClass}
+                            />
+                            <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                                JPG, PNG or WebP. Max 5 MB.
+                            </span>
+                        </label>
+                    </div>
 
                     <label className="mt-4 block text-sm font-semibold text-foreground">
                         Why do you want to work with us? <span className="font-normal text-muted-foreground">(optional)</span>
@@ -235,7 +255,7 @@ export default function CareerForm() {
                         successMessage="Thank you! Your application has been sent. Our team will review it and contact you if your profile matches."
                     />
                     <p className="mt-3 text-center text-xs text-muted-foreground">
-                        Your application goes straight to our team.
+                        Your details and files are securely stored for the hiring team.
                     </p>
                 </motion.form>
             </div>

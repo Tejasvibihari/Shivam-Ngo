@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import SectionPlaceholder from "@/features/admin/access/components/SectionPlaceholder";
+import SubmissionsManagement from "@/features/admin/submissions/components/SubmissionsManagement";
 
 export const metadata: Metadata = { title: "Submissions" };
 
@@ -8,5 +8,5 @@ export const metadata: Metadata = { title: "Submissions" };
 export const instant = false;
 
 export default function AdminSubmissionsPage() {
-    return <SectionPlaceholder title="Submissions" description="Volunteer, career and contact form submissions." />;
+    return <SubmissionsManagement />;
 }

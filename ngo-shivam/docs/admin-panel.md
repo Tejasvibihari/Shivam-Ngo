@@ -162,6 +162,8 @@ Roles: `super_admin` > `admin` > `editor`. The full permission matrix is in `aut
 | `PUT /auth/password` | any role | change own password (ends all other sessions) |
 | `GET /stats` | any role | dashboard counts (account counts only for Admin and Super Admin) |
 | `GET /users` | Admin, Super Admin | list accounts (never hashes) |
+| `GET /submissions` | Editor, Admin, Super Admin | search and page through website form submissions |
+| `GET /submissions/:id/files/:kind` | Editor, Admin, Super Admin | view a submitted photo or download a resume |
 | `PUT /settings/signup-pin` | **Super Admin only** | change the signup PIN |
 
 ### 5.1 First Super Admin: `POST /api/admin/setup`
@@ -201,6 +203,11 @@ Roles: `super_admin` > `admin` > `editor`. The full permission matrix is in `aut
 - `PUT /auth/password` `{ "currentPassword", "newPassword" }` -> `{ ok, message }` plus a fresh session cookie. `403 invalid_current_password`, `429` after 5 attempts per 15 minutes.
 - `GET /stats` -> `{ ok, activeSessions, users: null | { total, active, disabled, byRole } }`.
 - `GET /users?page=1&pageSize=20&q=text&role=editor&status=active` -> `{ ok, users, total, page, pageSize }`. Defaults: page 1, 20 per page; `pageSize` max 50; `role` and `status` must be known values.
+- `GET /submissions?page=1&pageSize=20&q=text&type=career` -> `{ ok, submissions, total, page, pageSize }`. Types: `contact`, `volunteer`, `career`, `donation`; page size max 50. Any signed-in Editor, Admin or Super Admin may view submissions and uploaded files; only Admin and Super Admin may delete submissions.
+
+### 5.6 Website forms
+
+`POST /api/forms` stores contact, volunteer, career and donation-enquiry submissions in `form_submissions`, then sends an email notification when SMTP is configured. Career applications use `multipart/form-data`: a resume is required (PDF, DOC or DOCX, max 10 MB) and a photo is required (JPG, PNG or WebP, max 5 MB). Files are stored in the `form_uploads` GridFS bucket. The donation form records an enquiry only; it does not process payments.
 
 ## 6. Running the checks
 

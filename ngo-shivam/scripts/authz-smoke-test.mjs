@@ -46,10 +46,10 @@ const cookieOf = (res) => (res.headers.get("set-cookie") ?? "").split(";")[0];
 const sameSet = (a, b) => JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
 
 /* What each role may do, written out independently of the server code (docs/authorization.md). */
-const EDITOR = ["admin:access", "content:read", "content:create", "content:update", "media:read", "media:upload"];
+const EDITOR = ["admin:access", "content:read", "content:create", "content:update", "media:read", "media:upload", "submissions:read"];
 const ADMIN = [
     ...EDITOR,
-    "content:publish", "content:delete", "media:delete", "submissions:read", "submissions:delete",
+    "content:publish", "content:delete", "media:delete", "submissions:delete",
     "users:read", "users:create", "users:update", "users:disable", "settings:read", "settings:update",
 ];
 const SUPER_ADMIN = [...ADMIN, "users:change_role", "audit:read", "settings:update_sensitive"];

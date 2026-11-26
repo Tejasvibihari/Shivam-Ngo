@@ -34,13 +34,13 @@ const EDITOR_PERMISSIONS: Permission[] = [
     "content:update",
     "media:read",
     "media:upload",
+    "submissions:read",
 ];
 const ADMIN_PERMISSIONS: Permission[] = [
     ...EDITOR_PERMISSIONS,
     "content:publish",
     "content:delete",
     "media:delete",
-    "submissions:read",
     "submissions:delete",
     "users:read",
     "users:create",
@@ -75,12 +75,15 @@ describe("role / permission matrix", () => {
         }
     });
 
-    it("an editor cannot publish, delete, read submissions or manage users", () => {
+    it("an editor can read submissions but cannot delete them or manage users", () => {
+        assert.equal(roleHasPermission("editor", "submissions:read"), true);
+        assert.equal(roleHasPermission("admin", "submissions:read"), true);
+        assert.equal(roleHasPermission("super_admin", "submissions:read"), true);
+        assert.equal(roleHasPermission("editor", "submissions:delete"), false);
         for (const permission of [
             "content:publish",
             "content:delete",
             "media:delete",
-            "submissions:read",
             "users:read",
             "users:create",
             "settings:read",

@@ -26,7 +26,8 @@ matrix on purpose.
 | `content:publish` / `content:delete` | Y | Y | |
 | `media:read` / `media:upload` | Y | Y | Y |
 | `media:delete` | Y | Y | |
-| `submissions:read` / `submissions:delete` (form data, personal) | Y | Y | |
+| `submissions:read` (form data, personal) | Y | Y | Y |
+| `submissions:delete` | Y | Y | |
 | `users:read` / `users:create` / `users:update` / `users:disable` | Y | Y | |
 | `users:change_role` | Y | | |
 | `audit:read` | Y | | |

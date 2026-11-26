@@ -61,7 +61,7 @@ export default function ContactForm() {
         (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
             setForm((f) => ({ ...f, [key]: e.target.value }));
 
-    // Sends the form to /api/forms, which emails it to the NGO inbox.
+    // Sends the form to /api/forms for storage and email notification.
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) =>
         handleSubmit(e, form, () => setForm(EMPTY_FORM));
 
