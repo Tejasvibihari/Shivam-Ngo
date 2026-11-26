@@ -2,7 +2,8 @@
 
 Client-side authentication state and protected routes for the admin panel. It
 reuses the existing backend routes (`/api/admin/auth/me`, `/login`, `/logout`);
-nothing changed on the server. Roles/permissions are NOT interpreted here yet.
+nothing changed on the server. Role-based page and menu access is built on top
+of it: see `docs/admin-frontend-rbac.md`.
 
 ## Pieces
 

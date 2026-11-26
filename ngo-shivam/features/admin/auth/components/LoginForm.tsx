@@ -101,7 +101,17 @@ export default function LoginForm({ next, reason }: { next?: string; reason?: st
         setMessage("");
         setSending(true);
         const result = await signIn(parsed.data.email, parsed.data.password);
-        if (result.kind === "ok") return; // the effect above redirects once the state is "authenticated"
+        if (result.kind === "ok") {
+            // The effect above redirects once the state is "authenticated". Next.js can keep this page's
+            // state alive while the admin panel is open, so reset it now: after signing out, the login page
+            // must come back empty and ready, not with the old password and a button stuck on "Signing in...".
+            setForm({ email: "", password: "" });
+            setErrors({});
+            setMessage("");
+            setShowPassword(false);
+            setSending(false);
+            return;
+        }
 
         setSending(false);
         setMessage(result.message);

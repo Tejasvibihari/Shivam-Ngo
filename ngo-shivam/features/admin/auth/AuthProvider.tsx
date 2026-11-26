@@ -22,8 +22,9 @@ import type { AuthUser } from "@/features/admin/auth/types";
  *   error            the check could not be completed (server/network); the
  *                    session may be fine, so we do NOT treat it as signed out
  *
- * This is authentication only. Roles/permissions are not interpreted here (a
- * later task); the server still enforces access on every API call.
+ * This is authentication only. Roles/permissions are not interpreted here: they
+ * are derived from `user.role` in features/admin/access (useAccess, RoleGuard),
+ * and the server still enforces access on every API call.
  */
 
 export type AuthStatus = "loading" | "authenticated" | "unauthenticated" | "error";
