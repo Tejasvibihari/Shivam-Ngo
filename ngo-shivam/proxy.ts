@@ -32,8 +32,10 @@ export function proxy(request: NextRequest) {
     if (pathname === "/admin" || pathname.startsWith("/admin/")) {
         if (PUBLIC_PAGES.has(pathname)) return NextResponse.next();
         const url = request.nextUrl.clone();
+        // remember where the user was going, so the login page can send them back (it validates this value)
+        const next = pathname + request.nextUrl.search;
         url.pathname = "/admin/login";
-        url.search = "";
+        url.search = pathname === "/admin" ? "" : `?next=${encodeURIComponent(next)}`;
         return NextResponse.redirect(url);
     }
     return NextResponse.next();

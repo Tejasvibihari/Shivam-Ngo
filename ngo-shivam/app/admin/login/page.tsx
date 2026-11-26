@@ -1,0 +1,20 @@
+import type { Metadata } from "next";
+import LoginForm from "@/features/admin/auth/components/LoginForm";
+
+export const metadata: Metadata = {
+    title: "Admin sign in",
+    robots: { index: false, follow: false },
+};
+
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value);
+
+export default async function AdminLoginPage({ searchParams }: { searchParams: SearchParams }) {
+    const params = await searchParams;
+    return (
+        <main className="flex min-h-screen w-full items-center justify-center bg-brand-light px-4 py-12 sm:px-6">
+            <LoginForm next={first(params.next)} reason={first(params.reason)} />
+        </main>
+    );
+}
