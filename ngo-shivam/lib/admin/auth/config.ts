@@ -61,6 +61,10 @@ export const SIGNUP_MAX_GLOBAL = 20;
 export const PIN_CHANGE_WINDOW_MS = 15 * 60 * 1000;
 export const PIN_CHANGE_MAX_PER_USER = 5;
 
+/** Changing the password requires the current one, so a stolen session cannot guess it. */
+export const PASSWORD_CHANGE_WINDOW_MS = 15 * 60 * 1000;
+export const PASSWORD_CHANGE_MAX_PER_USER = 5;
+
 /**
  * Role given to every account created through signup. It is a constant, never
  * taken from the request, and is deliberately NOT "super_admin": the only way

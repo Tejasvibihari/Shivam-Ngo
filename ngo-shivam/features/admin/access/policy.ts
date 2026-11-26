@@ -48,6 +48,8 @@ export type AdminRoute = {
 };
 
 export const ADMIN_HOME_PATH = "/admin";
+export const PROFILE_PATH = "/admin/profile";
+export const SIGNUP_PIN_PATH = "/admin/settings/signup-pin";
 export const ACCESS_DENIED_PATH = "/admin/access-denied";
 
 /**
@@ -105,9 +107,22 @@ export const ADMIN_ROUTES: readonly AdminRoute[] = Object.freeze([
     {
         href: "/admin/settings",
         label: "Settings",
-        description: "Site settings.",
+        description: "Site settings and your account security.",
         requirement: { permission: "settings:read" },
         icon: "settings",
+    },
+    {
+        // longer than "/admin/settings", so it has its own, stricter rule: Super Admin only
+        href: SIGNUP_PIN_PATH,
+        label: "Signup PIN",
+        description: "Change the PIN that people need to create an account.",
+        requirement: { permission: "settings:update_sensitive" },
+    },
+    {
+        href: PROFILE_PATH,
+        label: "Profile",
+        description: "Your name and password.",
+        requirement: { permission: "admin:access" },
     },
     {
         href: ACCESS_DENIED_PATH,

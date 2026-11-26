@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AdminHome from "@/features/admin/auth/components/AdminHome";
+import Dashboard from "@/features/admin/dashboard/components/Dashboard";
 
 export const metadata: Metadata = { title: "Admin dashboard" };
 
@@ -8,5 +8,5 @@ export const metadata: Metadata = { title: "Admin dashboard" };
 export const instant = false;
 
 export default function AdminDashboardPage() {
-    return <AdminHome />;
+    return <Dashboard />;
 }

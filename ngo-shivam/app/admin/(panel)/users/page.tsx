@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import SectionPlaceholder from "@/features/admin/access/components/SectionPlaceholder";
+import UsersManagement from "@/features/admin/users/components/UsersManagement";
 
 export const metadata: Metadata = { title: "Users" };
 
@@ -8,5 +8,5 @@ export const metadata: Metadata = { title: "Users" };
 export const instant = false;
 
 export default function AdminUsersPage() {
-    return <SectionPlaceholder title="Users" description="Admin accounts and their roles." />;
+    return <UsersManagement />;
 }

@@ -55,3 +55,19 @@ export const changeSignupPinSchema = z
         message: "New PIN must be different from the current PIN.",
     });
 export type ChangeSignupPinInput = z.infer<typeof changeSignupPinSchema>;
+
+/** PATCH /api/admin/auth/profile. Strict: only the display name can be changed here (never role/status/email). */
+export const updateProfileSchema = z.strictObject({ name: nameSchema });
+export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
+
+/** PUT /api/admin/auth/password. */
+export const changePasswordSchema = z
+    .strictObject({
+        currentPassword: z.string().min(1, "Current password is required.").max(PASSWORD_MAX, "Current password is not correct."),
+        newPassword: newPasswordSchema,
+    })
+    .refine((v) => v.currentPassword !== v.newPassword, {
+        path: ["newPassword"],
+        message: "New password must be different from the current password.",
+    });
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;

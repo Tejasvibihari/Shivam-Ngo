@@ -72,6 +72,8 @@ type AuthContextValue = State & {
     signIn: (email: string, password: string) => Promise<LoginResult>;
     /** Sign out through the existing logout API, then clear the local state. */
     signOut: () => Promise<SignOutResult>;
+    /** Replace the signed-in user with a fresh copy the server just returned (e.g. after a profile change). */
+    updateUser: (user: AuthUser) => void;
     /**
      * `fetch` for admin API calls: same-origin cookies, and a 401 anywhere
      * marks the session as expired so the user is sent to the login page.
@@ -156,6 +158,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { ok: true };
     }, []);
 
+    const updateUser = useCallback((user: AuthUser) => dispatch({ type: "authenticated", user }), []);
+
     const authFetch = useCallback(async (input: RequestInfo | URL, init?: RequestInit) => {
         const res = await fetch(input, { ...init, credentials: "same-origin" });
         if (res.status === 401 && statusRef.current === "authenticated") {
@@ -165,8 +169,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     const value = useMemo<AuthContextValue>(
-        () => ({ ...state, refresh, signIn, signOut, authFetch }),
-        [state, refresh, signIn, signOut, authFetch],
+        () => ({ ...state, refresh, signIn, signOut, updateUser, authFetch }),
+        [state, refresh, signIn, signOut, updateUser, authFetch],
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

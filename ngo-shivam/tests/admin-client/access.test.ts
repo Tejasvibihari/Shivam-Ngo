@@ -57,11 +57,25 @@ describe("page access per role", () => {
         assert.equal(canAccessPath("admin", "/admin/submissions"), true);
     });
 
-    it("Editor may only open dashboard, content, media and the access-denied page", () => {
+    it("Editor may only open dashboard, content, media, their own profile and the access-denied page", () => {
         const allowed = ADMIN_ROUTES.filter((r) => canAccessPath("editor", r.href)).map((r) => r.href);
-        assert.deepEqual(allowed, ["/admin", "/admin/content", "/admin/media", ACCESS_DENIED_PATH]);
+        assert.deepEqual(allowed, ["/admin", "/admin/content", "/admin/media", "/admin/profile", ACCESS_DENIED_PATH]);
         for (const denied of ["/admin/users", "/admin/audit", "/admin/settings", "/admin/submissions"]) {
             assert.equal(canAccessPath("editor", denied), false, denied);
+        }
+    });
+
+    it("the signup PIN page is Super Admin only, even though Admin may open Settings", () => {
+        assert.equal(canAccessPath("super_admin", "/admin/settings/signup-pin"), true);
+        assert.equal(canAccessPath("admin", "/admin/settings"), true);
+        assert.equal(canAccessPath("admin", "/admin/settings/signup-pin"), false);
+        assert.equal(canAccessPath("editor", "/admin/settings/signup-pin"), false);
+    });
+
+    it("every role may open its own profile page, and it is not in the menu", () => {
+        for (const role of ROLES) {
+            assert.equal(canAccessPath(role, "/admin/profile"), true, role);
+            assert.equal(hrefs(role).includes("/admin/profile"), false, role);
         }
     });
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import SectionPlaceholder from "@/features/admin/access/components/SectionPlaceholder";
+import SettingsHub from "@/features/admin/settings/components/SettingsHub";
 
 export const metadata: Metadata = { title: "Settings" };
 
@@ -8,5 +8,5 @@ export const metadata: Metadata = { title: "Settings" };
 export const instant = false;
 
 export default function AdminSettingsPage() {
-    return <SectionPlaceholder title="Settings" description="Site settings." />;
+    return <SettingsHub />;
 }

@@ -27,6 +27,10 @@ export type Role = (typeof ROLES)[number];
 export const USER_STATUSES = ["active", "disabled"] as const;
 export type UserStatus = (typeof USER_STATUSES)[number];
 
+/** Type guard for untrusted strings (query parameters). */
+export const isRoleValue = (value: unknown): value is Role =>
+    typeof value === "string" && (ROLES as readonly string[]).includes(value);
+
 const ROLE_RANK: Record<Role, number> = { super_admin: 3, admin: 2, editor: 1 };
 
 /** True when `role` is at least as powerful as `minimum`. */
@@ -172,6 +176,9 @@ export const AUDIT_ACTIONS = [
     "authz.access_denied",
     "settings.signup_pin_changed",
     "settings.signup_pin_change_failed",
+    "auth.profile_updated",
+    "auth.password_changed",
+    "auth.password_change_failed",
     "user.role_changed",
     "user.status_changed",
 ] as const;
