@@ -66,6 +66,26 @@ export const PASSWORD_CHANGE_WINDOW_MS = 15 * 60 * 1000;
 export const PASSWORD_CHANGE_MAX_PER_USER = 5;
 
 /**
+ * One-time Super Admin setup (see setup.ts). Every attempt counts. The token is long
+ * and random, so these limits only exist to stop noise and abuse, not to protect a weak secret.
+ */
+export const SETUP_WINDOW_MS = 60 * 60 * 1000;
+export const SETUP_MAX_PER_IP = 10;
+export const SETUP_MAX_GLOBAL = 30;
+export const SETUP_TOKEN_MIN_LENGTH = 32;
+const SETUP_TOKEN_PLACEHOLDERS = new Set(["put-a-one-time-setup-token-here", "changeme", "secret"]);
+
+/**
+ * SETUP_TOKEN from the environment, or null when it is unset, too short or still the
+ * placeholder. A null token keeps the setup endpoint closed (fail closed).
+ */
+export function getSetupToken(): string | null {
+    const raw = (process.env.SETUP_TOKEN ?? "").trim();
+    if (raw.length < SETUP_TOKEN_MIN_LENGTH || SETUP_TOKEN_PLACEHOLDERS.has(raw)) return null;
+    return raw;
+}
+
+/**
  * Role given to every account created through signup. It is a constant, never
  * taken from the request, and is deliberately NOT "super_admin": the only way
  * to become Super Admin is the one-time setup process.

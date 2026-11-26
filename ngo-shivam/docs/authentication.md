@@ -3,8 +3,8 @@
 Email + password login for the admin panel, with server-side sessions, rate
 limiting and a reusable authentication middleware. The login endpoints
 themselves create no users and assign no roles. PIN-protected signup is
-documented in `docs/signup-pin.md` (Task 04); the one-time Super Admin setup is
-a separate task.
+documented in `docs/signup-pin.md` (Task 04); the one-time Super Admin setup and
+the final audit are in `docs/admin-panel.md`.
 
 ## 1. Environment variables
 
@@ -111,7 +111,7 @@ pnpm install
 pnpm dev                       # http://localhost:3000
 
 # 1. Create a throw-away user (dev only; refuses NODE_ENV=production).
-#    The real first Super Admin is created by the one-time setup task later.
+#    In production the first Super Admin is created on /admin/setup (docs/admin-panel.md).
 SEED_PASSWORD='correct-horse-battery-9' node --env-file=.env.local \
   scripts/dev-seed-user.mjs --email admin@example.com --name "Test Admin" --role super_admin
 

@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "test:authz": "node --import ./tests/authz/register.mjs --test tests/authz/permissions.test.ts tests/authz/route-guards.test.ts",
-    "test:admin-client": "node --import ./tests/authz/register.mjs --test tests/admin-client/redirect.test.ts tests/admin-client/access.test.ts"
+    "test:admin-client": "node --import ./tests/authz/register.mjs --test tests/admin-client/redirect.test.ts tests/admin-client/access.test.ts",
+    "test:admin-api": "node --import ./tests/admin-api/register.mjs --test tests/admin-api/auth.test.ts tests/admin-api/authz.test.ts tests/admin-api/signup-pin.test.ts tests/admin-api/validation.test.ts tests/admin-api/setup.test.ts tests/admin-api/proxy.test.ts",
+    "test:admin": "pnpm test:authz && pnpm test:admin-client && pnpm test:admin-api"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

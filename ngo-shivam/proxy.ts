@@ -13,7 +13,13 @@ import { NextResponse, type NextRequest } from "next/server";
 const COOKIE = process.env.NODE_ENV === "production" ? "__Host-ngo_session" : "ngo_session";
 
 // signup is public but protected by the signup PIN (see app/api/admin/auth/signup/route.ts)
-const PUBLIC_API = new Set(["/api/admin/auth/login", "/api/admin/auth/logout", "/api/admin/auth/signup"]);
+// setup is public but protected by SETUP_TOKEN and closes for good once a Super Admin exists (app/api/admin/setup/route.ts)
+const PUBLIC_API = new Set([
+    "/api/admin/auth/login",
+    "/api/admin/auth/logout",
+    "/api/admin/auth/signup",
+    "/api/admin/setup",
+]);
 const PUBLIC_PAGES = new Set(["/admin/login", "/admin/signup", "/admin/setup"]);
 
 export function proxy(request: NextRequest) {

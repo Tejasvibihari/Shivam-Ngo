@@ -168,6 +168,7 @@ export interface SessionDoc {
 
 export const AUDIT_ACTIONS = [
     "setup.super_admin_created",
+    "setup.failed",
     "auth.login_success",
     "auth.login_failed",
     "auth.logout",

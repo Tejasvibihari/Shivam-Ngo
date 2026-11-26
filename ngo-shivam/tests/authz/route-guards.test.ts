@@ -31,6 +31,8 @@ const PUBLIC_ROUTES: Record<string, string> = {
     "POST /api/admin/auth/logout": "idempotent; only ever ends the caller's own session",
     "GET /api/admin/auth/signup": "returns only { enabled }",
     "POST /api/admin/auth/signup": "signup PIN, rate limited, role fixed to editor",
+    "GET /api/admin/setup": "returns only { available }",
+    "POST /api/admin/setup": "SETUP_TOKEN, rate limited, role fixed to super_admin, closed once a Super Admin exists",
 };
 
 function routeFiles(dir: string): string[] {

@@ -41,6 +41,18 @@ export const signupSchema = z.strictObject({
 export type SignupInput = z.infer<typeof signupSchema>;
 
 /**
+ * POST /api/admin/setup (one-time creation of the first Super Admin). Strict: no `role`
+ * field exists, the role is fixed to super_admin by the server.
+ */
+export const setupSchema = z.strictObject({
+    setupToken: z.string().min(1, "Setup token is required.").max(256, "Setup token is not correct."),
+    name: nameSchema,
+    email: emailSchema,
+    password: newPasswordSchema,
+});
+export type SetupInput = z.infer<typeof setupSchema>;
+
+/**
  * PUT /api/admin/settings/signup-pin. `currentPin` is optional in the schema
  * only because the very first PIN has nothing to compare against; the route
  * requires it whenever a PIN is already configured.

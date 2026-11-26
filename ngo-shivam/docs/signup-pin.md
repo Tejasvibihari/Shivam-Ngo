@@ -200,6 +200,5 @@ Manual checks:
 ### Not part of this task
 
 The `/admin/login` page (the signup success screen links to it), the one-time Super
-Admin setup, user/role management and the dashboard are separate tasks. Until the
-setup task exists, create the first Super Admin with `scripts/dev-seed-user.mjs`
-(development only).
+The first Super Admin is created on the one-time `/admin/setup` page (see
+`docs/admin-panel.md`). `scripts/dev-seed-user.mjs` remains available for development only.

@@ -15,6 +15,8 @@ const MAX_PAGE_SIZE = 50;
 const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 function intParam(value: string | null, fallback: number, min: number, max: number): number {
+    // A missing or empty parameter must use the default: Number(null) and Number("") are 0, which would be clamped to `min`.
+    if (value === null || value.trim() === "") return fallback;
     const n = Number(value);
     return Number.isInteger(n) ? Math.min(max, Math.max(min, n)) : fallback;
 }
