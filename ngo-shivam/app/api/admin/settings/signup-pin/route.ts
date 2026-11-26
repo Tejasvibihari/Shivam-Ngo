@@ -9,9 +9,10 @@ import { changeSignupPinSchema } from "@/lib/admin/auth/validation";
 /**
  * PUT /api/admin/settings/signup-pin   { "currentPin": "123456", "newPin": "654321" }
  *
- * Super Admin only: `withAuth` returns 401 without a valid session and 403 for any
- * other role, before this handler runs. The PIN is stored only as a hash and the
- * response never contains the PIN or the hash.
+ * Super Admin only (permission `settings:update_sensitive`): `withAuth` returns 401
+ * without a valid session and 403 for any other role, before this handler runs or
+ * reads the body. The PIN is stored only as a hash and the response never contains
+ * the PIN or the hash.
  *
  * When no PIN is configured yet (no SIGNUP_PIN_INITIAL), `currentPin` is not needed
  * and this call sets the first PIN.
@@ -68,5 +69,5 @@ export const PUT = withAuth(
         });
         return json({ ok: true as const, message: "Signup PIN updated.", updatedAt: new Date() });
     },
-    { minRole: "super_admin" },
+    { permission: "settings:update_sensitive" },
 );

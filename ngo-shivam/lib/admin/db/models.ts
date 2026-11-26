@@ -55,7 +55,13 @@ export const pinSchema = z.string().regex(/^\d{6,12}$/, "PIN must be 6 to 12 dig
 export const roleSchema = z.enum(ROLES);
 export const userStatusSchema = z.enum(USER_STATUSES);
 
-/** What a caller must supply to create a user; the password hash is added server-side. */
+/**
+ * What a caller must supply to create a user; the password hash is added server-side.
+ *
+ * SHAPE ONLY. `role` here is untrusted input: a route that uses this schema must
+ * also call `authorizeUserCreate(actor.role, input.role)` (lib/admin/auth/permissions.ts),
+ * otherwise an Admin could create a Super Admin by sending `"role": "super_admin"`.
+ */
 export const newUserInputSchema = z.object({
     name: nameSchema,
     email: emailSchema,
@@ -163,6 +169,7 @@ export const AUDIT_ACTIONS = [
     "auth.logout",
     "auth.signup",
     "auth.signup_failed",
+    "authz.access_denied",
     "settings.signup_pin_changed",
     "settings.signup_pin_change_failed",
     "user.role_changed",

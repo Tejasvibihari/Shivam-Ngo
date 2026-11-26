@@ -9,6 +9,7 @@ import {
     SIGNUP_WINDOW_MS,
 } from "@/lib/admin/auth/config";
 import { hashPassword } from "@/lib/admin/auth/password";
+import { assertSelfRegistrationRole } from "@/lib/admin/auth/permissions";
 import { consume, SIGNUP_GLOBAL_KEY, signupIpKey, type RateLimitResult } from "@/lib/admin/auth/rate-limit";
 import { clientIp, fail, handleError, isSameOrigin, json, readJson, validationFail } from "@/lib/admin/auth/request";
 import { getSignupPinHash, isSignupOpen, verifyPin } from "@/lib/admin/auth/signup-pin";
@@ -29,8 +30,9 @@ import { toPublicUser, type UserDoc } from "@/lib/admin/db/models";
  *  2. the PIN is checked against its scrypt hash BEFORE anything else is looked
  *     up or written, so no e-mail address is ever confirmed to someone without it;
  *  3. attempts are rate limited per IP and globally (see config.ts);
- *  4. the role is fixed server-side to SIGNUP_DEFAULT_ROLE, and the strict input
- *     schema rejects a `role` / `status` field;
+ *  4. the role is fixed server-side to SIGNUP_DEFAULT_ROLE, the strict input
+ *     schema rejects a `role` / `status` field, and assertSelfRegistrationRole()
+ *     refuses (500, nothing is created) any role that anonymous signup may not give;
  *  5. cross-site requests are rejected (Origin check).
  */
 
@@ -90,7 +92,7 @@ export async function POST(request: NextRequest) {
             name,
             email,
             passwordHash: await hashPassword(password),
-            role: SIGNUP_DEFAULT_ROLE,
+            role: assertSelfRegistrationRole(SIGNUP_DEFAULT_ROLE),
             status: "active",
             lastLoginAt: null,
             createdAt: now,

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:authz": "node --import ./tests/authz/register.mjs --test tests/authz/permissions.test.ts tests/authz/route-guards.test.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

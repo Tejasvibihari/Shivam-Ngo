@@ -83,16 +83,18 @@ includes the password hash.
 import { withAuth } from "@/lib/admin/auth/guard";
 import { json } from "@/lib/admin/auth/request";
 
-// any signed-in user
-export const GET = withAuth(async (_req, auth) => json({ ok: true, role: auth.user.role }));
+// any role that may use the admin API (self-service routes)
+export const GET = withAuth(async (_req, auth) => json({ ok: true, role: auth.user.role }), { permission: "admin:access" });
 
-// Super Admin only (e.g. PUT /api/admin/settings/signup-pin in a later task)
-export const PUT = withAuth(async (req, auth) => { /* ... */ }, { minRole: "super_admin" });
+// Super Admin only (e.g. PUT /api/admin/settings/signup-pin)
+export const PUT = withAuth(async (req, auth) => { /* ... */ }, { permission: "settings:update_sensitive" });
 ```
 
-`withAuth` checks Origin (unsafe methods), the session, and the role
-(`401` / `403`), and converts thrown errors into safe `500`/`503` responses.
-Admin pages (Server Components) use `getCurrentUser()` from the same module.
+`withAuth` checks Origin (unsafe methods), the session, and the role/permission
+(`401` / `403`), and converts thrown errors into safe `500`/`503` responses. The
+requirement is mandatory; the roles, permissions and the full matrix are in
+`docs/authorization.md`. Admin pages (Server Components) use `getCurrentUser()`
+from the same module.
 
 ## 4. Data added
 
