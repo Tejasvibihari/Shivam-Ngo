@@ -26,7 +26,7 @@ one matrix. The role itself is the one already in `AuthProvider` state, which is
 re-checked from the server on load and when the tab regains focus, so a role
 change applies on the next check.
 
-## Page access and navigation per role
+## Page access per role
 
 | Page | Needs permission | Super Admin | Admin | Editor |
 |---|---|:-:|:-:|:-:|
@@ -39,11 +39,12 @@ change applies on the next check.
 | `/admin/settings` Settings | `settings:read` | Y | Y | |
 | `/admin/access-denied` | `admin:access` | Y | Y | Y |
 
-The menu shows exactly the "Y" pages of the role (access-denied is never listed):
+`Y` indicates page access; Content and Media remain available by URL but are intentionally
+hidden from the menu and dashboard section cards. Other menu entries are:
 
-* **Super Admin:** Dashboard, Content, Media, Submissions, Users, Audit log, Settings
-* **Admin:** Dashboard, Content, Media, Submissions, Users, Settings
-* **Editor:** Dashboard, Content, Media, Submissions
+* **Super Admin:** Dashboard, Submissions, Users, Audit log, Settings
+* **Admin:** Dashboard, Submissions, Users, Settings
+* **Editor:** Dashboard, Submissions
 
 Sub-paths use the rule of their section (`/admin/users/123` needs `users:read`).
 The submissions screen lists stored website form entries and their career uploads.
@@ -81,9 +82,9 @@ pnpm test:authz          # existing backend authorization tests
 
 Manual (needs MongoDB; see `docs/authentication.md` to seed users). Sign in as each role:
 
-* Editor: menu has Dashboard, Content, Media and Submissions. Opening `/admin/users`,
+* Editor: menu has Dashboard and Submissions. Opening `/admin/users`,
   `/admin/audit` or `/admin/settings` by URL shows "Access denied".
-* Admin: menu adds Submissions, Users, Settings. `/admin/audit` shows "Access denied".
-* Super Admin: all seven items; no page is denied.
+* Admin: menu adds Users and Settings. `/admin/audit` shows "Access denied".
+* Super Admin: all five menu items; no page is denied.
 * Narrow the window below 1024px: the sidebar becomes a top bar with a menu button.
 * Sign out from the menu returns to the login page.

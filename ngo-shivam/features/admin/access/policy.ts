@@ -74,14 +74,12 @@ export const ADMIN_ROUTES: readonly AdminRoute[] = Object.freeze([
         label: "Content",
         description: "News, activities, gallery and team pages.",
         requirement: { permission: "content:read" },
-        icon: "content",
     },
     {
         href: "/admin/media",
         label: "Media",
         description: "Uploaded images and files.",
         requirement: { permission: "media:read" },
-        icon: "media",
     },
     {
         href: "/admin/submissions",

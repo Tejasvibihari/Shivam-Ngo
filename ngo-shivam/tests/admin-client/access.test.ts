@@ -16,9 +16,9 @@ import { ROLES, type Role } from "@/lib/admin/db/models";
 
 /** Hand-written copy of what each role may see in the menu (docs/admin-frontend-rbac.md). */
 const NAV: Record<Role, string[]> = {
-    super_admin: ["/admin", "/admin/content", "/admin/media", "/admin/submissions", "/admin/users", "/admin/audit", "/admin/settings"],
-    admin: ["/admin", "/admin/content", "/admin/media", "/admin/submissions", "/admin/users", "/admin/settings"],
-    editor: ["/admin", "/admin/content", "/admin/media", "/admin/submissions"],
+    super_admin: ["/admin", "/admin/submissions", "/admin/users", "/admin/audit", "/admin/settings"],
+    admin: ["/admin", "/admin/submissions", "/admin/users", "/admin/settings"],
+    editor: ["/admin", "/admin/submissions"],
 };
 
 const hrefs = (role: unknown) => navItemsForRole(role).map((item) => item.href);
@@ -34,6 +34,15 @@ describe("navigation per role", () => {
         for (const role of ROLES) {
             for (const route of ADMIN_ROUTES.filter((r) => r.icon)) {
                 assert.equal(hrefs(role).includes(route.href), canAccessPath(role, route.href), `${role} ${route.href}`);
+            }
+        }
+    });
+
+    it("hides Content and Media menu links while keeping their pages accessible", () => {
+        for (const role of ROLES) {
+            for (const href of ["/admin/content", "/admin/media"]) {
+                assert.equal(hrefs(role).includes(href), false, `${role} menu ${href}`);
+                assert.equal(canAccessPath(role, href), true, `${role} page ${href}`);
             }
         }
     });
